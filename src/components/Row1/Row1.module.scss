@@ -1,0 +1,42 @@
+.online {
+    display: block;
+}
+
+.week {
+    position: relative;
+    font-size: 20px;
+    padding : 10px;
+    text-align: center;
+
+    &:hover{
+        background-color: rgba(128, 128, 128, 0.211);
+        cursor: pointer;
+    }
+
+    img {
+        position: absolute;
+        width: 20px;
+        top: 5px;
+        right: 5px; 
+    } 
+    
+
+    div:first-child {
+        font-style: italic;
+    }
+
+    div:nth-child(2) {
+        font-weight: bold;
+    }
+}
+
+.month {
+    font-size: 30px;
+    font-style: italic;
+    padding : 5px 20px;
+    text-align: center;
+}
+
+.onFocus {
+    background-color: rgba(128, 128, 128, 0.5);
+}

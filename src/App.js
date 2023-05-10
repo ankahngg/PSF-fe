@@ -1,25 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import Row1 from './components/Row1';
+import LeftBar from './components/LeftBar';
+import ShowHistory from './components/ShowHistory';
+import RightBar from './components/RightBar';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    
+    <table>
+      <tr><Row1 /></tr>
+       <tr>
+        <td><LeftBar /></td>
+        <td colSpan={5} className='TopAlign'><ShowHistory /></td>
+        <td className='TopAlign'><RightBar /></td>
+      </tr> 
+        
+    </table>
+  )
 }
 
 export default App;
