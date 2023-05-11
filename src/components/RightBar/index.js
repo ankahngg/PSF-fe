@@ -2,6 +2,8 @@ import styles from './RightBar.module.scss';
 import { useState, useEffect, useContext } from 'react';
 import { CurrentContext } from '../../provider/CurentContext';
 import axios from 'axios';
+require('dotenv').config()
+
 
 function RightBar() {
     const context = useContext(CurrentContext);
@@ -28,7 +30,7 @@ function RightBar() {
             MoneyInput : +MoneyInput.substr(1,MoneyInput.length-1),
             NoteInput
         }
-        axios.post('http://localhost:4000/api/add',data)
+        axios.post(`${process.env.URL_BACK_END}/api/add`,data)
             .then(res => {
                 console.log(res);
                 context.reRender();

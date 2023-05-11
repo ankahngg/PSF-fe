@@ -3,6 +3,8 @@ import styles from './Row1.module.scss';
 import axios from 'axios';
 import { useState, useEffect, useContext } from 'react';
 import { CurrentContext } from '../../provider/CurentContext';
+require('dotenv').config()
+
 
 import online from './online.png';
 
@@ -16,7 +18,7 @@ function Row1() {
     const [Week5, setWeek5] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/months_data')
+        axios.get(`${process.env.URL_BACK_END}/api/months_data`)
             .then(({data}) => {
                 setWeek1(data[0]['WEEK1_OUT']);
                 setWeek2(data[0]['WEEK2_OUT']);

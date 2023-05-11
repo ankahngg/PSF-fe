@@ -3,6 +3,8 @@ import { useContext } from 'react';
 import styles from './ShowHistory.module.scss';
 import { CurrentContext } from '../../provider/CurentContext';
 import axios from 'axios';
+require('dotenv').config()
+
 
 
 
@@ -15,7 +17,7 @@ function ShowHistory() {
     
     useEffect(() => {
         
-        axios.get(`http://localhost:4000/api/${context.Current}_${context.State}`)
+        axios.get(`${process.env.URL_BACK_END}/api/${context.Current}_${context.State}`)
             .then((res) => {
                 setList(res.data);
             })
