@@ -29,7 +29,7 @@ function ShowHistory() {
     }
 
     function handleRemove(dt) {
-        axios.post('http://localhost:4000/api/remove',dt)
+        axios.post(`${process.env.REACT_APP_API_URL}/api/remove`,dt)
             .then((res) => {
                 context.reRender();
             })
