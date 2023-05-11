@@ -3,12 +3,13 @@ import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import styles from './LeftBar.module.scss';
 import { CurrentContext } from '../../provider/CurentContext';
-require('dotenv').config()
 
 
 
 import Chi from './Chi.png';
 import Thu from './Thu.png'
+
+console.log(process.env.URL_BACK_END);
 
 function LeftBar() {
     const context = useContext(CurrentContext); 
@@ -17,7 +18,7 @@ function LeftBar() {
 
     useEffect(() => {
         console.log('getdata from leftbar');
-        axios.get(`${process.env.URL_BACK_END}/api/months_data`)
+        axios.get(`${process.env.REACT_APP_API_URL}/api/months_data`)
             .then(({data}) => {
                 // cal total month_money_out
                 setmoneyIn(data[0]['MONTH_IN']);
