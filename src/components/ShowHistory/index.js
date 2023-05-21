@@ -22,15 +22,17 @@ function ShowHistory() {
             .catch(() => {
                 setList([]);
             })
-    },[context])
+    },[context.Render, context.State])
 
     function handleClick(i) {
         context.setState(i);
     }
 
     function handleRemove(dt) {
+        context.setLoader(true);
         axios.post(`${process.env.REACT_APP_API_URL}/api/remove`,dt)
             .then((res) => {
+                context.setLoader(false);
                 context.reRender();
             })
             .catch((err) => {

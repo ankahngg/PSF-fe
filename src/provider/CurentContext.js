@@ -16,6 +16,7 @@ function CurentProvider({children}) {
     const [Current, setCurrent] = useState("week"+Weekth+"_out");
     const [Render, setRender] = useState(0);
     const [State,setState] = useState('tg');
+    const [Loader,setLoader] = useState(false);
     
     const updateCurrent = (k) => {
         setCurrent(k);
@@ -26,6 +27,8 @@ function CurentProvider({children}) {
 
 
     const value = {
+        Loader,
+        setLoader,
         State,
         Render,
         Weekth,

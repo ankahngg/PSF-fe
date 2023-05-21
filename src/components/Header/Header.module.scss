@@ -1,0 +1,36 @@
+
+
+
+
+.left {
+    font-size: 20px;
+    position: absolute;
+    padding-left: 30px;
+    left: -20px;
+    top: 0px;
+    display: flex;
+    align-items: center;
+    background-color: #f2f0e0;
+    height: 50px;
+    width: 60%;
+    border-radius: 20px;
+}
+
+.right {
+    font-size: 20px;
+    position: absolute;
+    display: flex;
+    right: 0px;
+    top: 0px;
+    width: 60%;
+    z-index: -1;
+    padding-right: 30px;
+    height: 50px;
+    background-color: #c7b299;
+    align-items: center;
+    justify-content: end;
+    img {
+        width: 30px;
+        margin-left: 50px;
+    }
+}

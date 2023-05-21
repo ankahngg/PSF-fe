@@ -27,7 +27,7 @@ function Row1() {
                 setWeek5(data[0]['WEEK5_OUT']);
             })
         }
-    ,[context])   
+    ,[context.Render])   
 
 
     function get(id) {

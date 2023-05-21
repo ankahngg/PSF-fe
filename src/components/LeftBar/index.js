@@ -28,7 +28,7 @@ function LeftBar() {
                 setmoneyOut(0);
                 setmoneyIn(0);
             })
-    },[context])
+    },[context.Render])
 
     function handleClick(i) {
         if(i == 1) {

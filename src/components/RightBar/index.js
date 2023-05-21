@@ -1,6 +1,7 @@
 import styles from './RightBar.module.scss';
 import { useState, useEffect, useContext } from 'react';
 import { CurrentContext } from '../../provider/CurentContext';
+import Loader from '../Loader';
 import axios from 'axios';
 
 
@@ -21,7 +22,7 @@ function RightBar() {
     }
 
     function handleValid() {
-        SetError(2);
+        context.setLoader(true);
         
         const data = {
             kind : (MoneyInput[0] == '-' ? 'out' : 'in'),
@@ -32,11 +33,11 @@ function RightBar() {
         }
         axios.post(`${process.env.REACT_APP_API_URL}/api/add`,data)
             .then(res => {
-                console.log(res);
-                context.reRender();
+                context.setLoader(false);
+                SetError(2);
                 SetMoneyInput('');
                 SetNoteInput('');
-
+                context.reRender();
             })
             .catch(err => {
                 console.log(err);
@@ -96,6 +97,8 @@ function RightBar() {
                 <button onClick={() => handleClick()}>GHI NHẬN</button>
                 <Log />    
             </div>
+            
+            {(context.Loader) ? <Loader /> : <div></div>}
         </div>
     )
 }

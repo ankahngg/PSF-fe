@@ -1,0 +1,39 @@
+.container {
+    left: 0px;
+    top:0px;
+    font-size: 25px;
+    width: 150px;
+    height: 1000px;
+    text-align: center;
+    background-color: #f2f0e0;
+    position: absolute;
+
+
+    .home  {
+        
+        &:hover {
+            cursor: pointer;
+        }
+        padding: 10px;
+        
+    }
+
+    .statistic {
+        &:hover {
+            cursor: pointer;
+        }
+        padding: 10px;
+        
+    }
+
+    .logo {
+        border-radius: 20px;
+    }
+
+    
+    
+}
+
+.onFocus {
+    background-color: #f2e57e;
+}
