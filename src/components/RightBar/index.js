@@ -1,13 +1,13 @@
 import styles from './RightBar.module.scss';
-import { useState, useEffect, useContext } from 'react';
-import { CurrentContext } from '../../provider/CurentContext';
+import { useState } from 'react';
+import { useStore, actions } from '../../store';
 import Loader from '../Loader';
 import axios from 'axios';
 
 
 
 function RightBar() {
-    const context = useContext(CurrentContext);
+    const [gbs,dispatch] = useStore();
     const [MoneyInput,SetMoneyInput] = useState('');
     const [NoteInput,SetNoteInput] = useState('');
     const [Error,SetError] = useState(0);
@@ -22,22 +22,22 @@ function RightBar() {
     }
 
     function handleValid() {
-        context.setLoader(true);
+        dispatch(actions.setLoader(true));
         
         const data = {
             kind : (MoneyInput[0] == '-' ? 'out' : 'in'),
-            id : context.Weekth,
-            date : context.Dateth,
+            id : gbs.Weekth,
+            date : gbs.Dateth,
             MoneyInput : +MoneyInput.substr(1,MoneyInput.length-1),
             NoteInput
         }
         axios.post(`${process.env.REACT_APP_API_URL}/api/add`,data)
             .then(res => {
-                context.setLoader(false);
+                dispatch(actions.setLoader(false));
                 SetError(2);
                 SetMoneyInput('');
                 SetNoteInput('');
-                context.reRender();
+                dispatch(actions.setRender());
             })
             .catch(err => {
                 console.log(err);
@@ -98,7 +98,7 @@ function RightBar() {
                 <Log />    
             </div>
             
-            {(context.Loader) ? <Loader /> : <div></div>}
+            {(gbs.Loader) ? <Loader /> : <div></div>}
         </div>
     )
 }

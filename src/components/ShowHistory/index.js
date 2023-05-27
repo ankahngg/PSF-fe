@@ -1,39 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { useContext } from 'react';
 import styles from './ShowHistory.module.scss';
-import { CurrentContext } from '../../provider/CurentContext';
 import axios from 'axios';
+import { useStore, actions } from '../../store';
 
 
 
 function ShowHistory() {
 
-    const context = useContext(CurrentContext); 
-
+    const [gbs,dispatch] = useStore();
     const [list,setList] = useState([]);
    
-    
     useEffect(() => {
         
-        axios.get(`${process.env.REACT_APP_API_URL}/api/${context.Current}_${context.State}`)
+        axios.get(`${process.env.REACT_APP_API_URL}/api/${gbs.currentState}_${gbs.sortState}`)
             .then((res) => {
                 setList(res.data);
             })
             .catch(() => {
                 setList([]);
             })
-    },[context.Render, context.State])
+    },[gbs])
 
     function handleClick(i) {
-        context.setState(i);
+        dispatch(actions.setSortState(i));
     }
 
     function handleRemove(dt) {
-        context.setLoader(true);
+        dispatch(actions.setLoader(true));
         axios.post(`${process.env.REACT_APP_API_URL}/api/remove`,dt)
             .then((res) => {
-                context.setLoader(false);
-                context.reRender();
+                dispatch(actions.setLoader(false));
+                dispatch(actions.setRender());
             })
             .catch((err) => {
                 console.log(err);
@@ -45,7 +42,7 @@ function ShowHistory() {
         <div className={styles.container}>
             <div className={styles.header}>
                 <div className={styles.date}>
-                    {context.Dateth}
+                    {gbs.Dateth}
                 </div>
                 <div className={styles.sortButton}>
                     <span>SẮP XẾP</span>

@@ -1,15 +1,14 @@
 import React from 'react';
 import styles from './Row1.module.scss';
 import axios from 'axios';
-import { useState, useEffect, useContext } from 'react';
-import { CurrentContext } from '../../provider/CurentContext';
-
+import { useState, useEffect } from 'react';
+import { useStore, actions } from '../../store';
 
 
 import online from './online.png';
 
 function Row1() {
-    const context = useContext(CurrentContext); 
+    const [gbs,dispatch] = useStore();
 
     const [Week1, setWeek1] = useState([]);
     const [Week2, setWeek2] = useState([]);
@@ -27,33 +26,31 @@ function Row1() {
                 setWeek5(data[0]['WEEK5_OUT']);
             })
         }
-    ,[context.Render])   
+    ,[gbs.Render])   
 
 
     function get(id) {
-        if (id == context.Current) return styles.onFocus + " " + styles.week;
+        if (id == gbs.currentState) return styles.onFocus + " " + styles.week;
         else return styles.week;
     }
 
     function handleClick(id) {
-        context.updateCurrent(id);
-        context.setState('tg');
+        dispatch(actions.setCurrentState(id));
+        dispatch(actions.setSortState('tg'));
     }
 
     function Week({ number, data }) {
         
-
-
         const id = `week${number}_out`; 
 
         return (
             <td className={get(id)} onClick={() => handleClick(id)}>
                 <div>TUẦN {number}</div>
                 {
-                    (number > context.Weekth) ? (<div>...</div>) : (<div>{data}k</div>)
+                    (number > gbs.Weekth) ? (<div>...</div>) : (<div>{data}k</div>)
                 }
                 {  
-                    number == context.Weekth && <img src={online} />
+                    number == gbs.Weekth && <img src={online} />
                 }
             </td>
         )
@@ -62,7 +59,7 @@ function Row1() {
     return (
         <React.Fragment>
             <td className={styles.month}>
-                THÁNG {context.Month}
+                THÁNG {gbs.Month}
             </td>
 
             <Week number={1} data={Week1} />

@@ -1,7 +1,7 @@
 import styles from './Navigate.module.scss';
 import home_logo from '../../file/home_logo.png';
 import statistic_logo from '../../file/statistic_logo.png';
-import { Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import React, { useState } from 'react';
 
@@ -13,8 +13,6 @@ function getPage() {
 function Navigate() {
     const [State,SetState] = useState(getPage());
     const [Hover,SetHover] = useState(0);
-
-    
 
     function handleClick(i) {
         SetState(i);

@@ -3,16 +3,32 @@ import React, { useState, useEffect } from 'react';
 import picture_login from '../../file/Picture_login.png';
 import password_login from '../../file/password_login.png';
 import user_login from '../../file/user_login.png';
+import {useNavigate}  from 'react-router-dom';
+import { actions, useStore } from '../../store';
 
 
 function Login() {
+    const [gbs,patch] = useStore();
+    const navigate = useNavigate();
+    const [UserName,SetUserName] = useState();
+    const [Password,SetPassword] = useState();
+
     
     useEffect(() => {
         document.body.style.backgroundColor = "#f2f0e0";
         return () => {
             document.body.style.backgroundColor = "transparent ";
         }
-    },[])
+    },[]);
+
+    function handleLogin() {
+        if(UserName == 'khang' && Password == '123') {
+            localStorage.setItem("username","khang");
+            localStorage.setItem("password",'123');
+            patch(actions.setToken(true));
+            navigate('/HOME');
+        }
+    }
 
     return (
         
@@ -30,12 +46,12 @@ function Login() {
                 <div className={styles.input}>
                     <div className={styles.username}>
                         <img src={user_login} />
-                        <input type="text" />
+                        <input type="text" onChange={(e)=>SetUserName(e.target.value)}/>
                       
                     </div>
                     <div className={styles.password}>
                         <img src={password_login} />
-                        <input type="password" />
+                        <input type="password" onChange={(e)=>SetPassword(e.target.value)}/>
                     </div>
                     <div className={styles.option}>
                         <div>
@@ -46,7 +62,7 @@ function Login() {
                     </div>
                 </div>
                 <div className={styles.button}>
-                    <button>ĐĂNG NHẬP</button>
+                    <button onClick={() => handleLogin()}>ĐĂNG NHẬP</button>
                     <div>
                         <span>ĐĂNG KÍ</span>
                     </div>

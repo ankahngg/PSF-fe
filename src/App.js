@@ -3,24 +3,22 @@ import Table from './part/Table'
 import Layout from './part/Layout'
 import Statistic from './part/Statistic'
 import Login from './part/Login'
-import React from 'react';
-import { Route,Routes } from 'react-router-dom';
+import { Route,Routes,Navigate } from 'react-router-dom';
+import { useStore } from './store';
 
 function App() {
-  return (
-    true ? <Login /> :
-    <div className={styles.wrapper}>
-      <Layout />
-      
-      <div className={styles.main}>
-        <Routes>
-          <Route path="HOME" element={<Table />} />
-          <Route path="*" element={<Table />} />
-          <Route path="STATISTIC" element={<Statistic />} />
-        </Routes>
-      </div>
+  const [gbs,patch] = useStore();
 
-    </div>
+  return (
+      <Routes>
+        <Route path="LOGIN" element={!gbs.Token ? <Login /> : <Navigate to="/HOME" /> }/>
+        <Route path="/" element={gbs.Token ? <Layout /> : <Navigate to="/LOGIN" />}>
+          <Route path="*" element={<Table />} />
+          <Route index element={<Table />} />
+          <Route path="HOME" element={<Table />} />
+          <Route path="STATISTIC" element={<Statistic />} />
+        </Route>  
+      </Routes>
   )
 }
 

@@ -1,23 +1,19 @@
 import React from 'react';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect} from 'react';
 import axios from 'axios';
 import styles from './LeftBar.module.scss';
-import { CurrentContext } from '../../provider/CurentContext';
-
-
+import { useStore, actions } from '../../store';
 
 import Chi from './Chi.png';
 import Thu from './Thu.png'
 
-console.log(process.env.URL_BACK_END);
 
 function LeftBar() {
-    const context = useContext(CurrentContext); 
+    const [gbs, dispatch] = useStore();
     const [moneyIn, setmoneyIn] = useState();
     const [moneyOut, setmoneyOut] = useState();
 
     useEffect(() => {
-        console.log('getdata from leftbar');
         axios.get(`${process.env.REACT_APP_API_URL}/api/months_data`)
             .then(({data}) => {
                 // cal total month_money_out
@@ -28,16 +24,16 @@ function LeftBar() {
                 setmoneyOut(0);
                 setmoneyIn(0);
             })
-    },[context.Render])
+    },[gbs.Render])
 
     function handleClick(i) {
         if(i == 1) {
-            context.updateCurrent("month_out");
-            context.setState('tg');
+            dispatch(actions.setCurrentState("month_out"));
+            dispatch(actions.setSortState("tg"));
         }
         else {
-            context.updateCurrent("month_in");
-            context.setState('tg');
+            dispatch(actions.setCurrentState("month_in"));
+            dispatch(actions.setSortState("tg"));
         }
     }
 
@@ -45,7 +41,7 @@ function LeftBar() {
         var classes = styles.tem;
         classes += " " + styles[id];
         if(id != "month_in") classes += " " + styles.bdbottom;
-        if(id == context.Current) classes += " " + styles.focus;
+        if(id == gbs.currentState) classes += " " + styles.focus;
         
         return classes;
     }
@@ -57,7 +53,7 @@ function LeftBar() {
                     Còn
                 </div>
                 <div>
-                    {context.Leftth}
+                    {gbs.Leftth}
                 </div>
                 <div>
                     Ngày
