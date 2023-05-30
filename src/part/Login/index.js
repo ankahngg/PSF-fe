@@ -5,13 +5,15 @@ import password_login from '../../file/password_login.png';
 import user_login from '../../file/user_login.png';
 import {useNavigate}  from 'react-router-dom';
 import { actions, useStore } from '../../store';
+import axios from 'axios';
 
 
 function Login() {
     const [gbs,patch] = useStore();
     const navigate = useNavigate();
-    const [UserName,SetUserName] = useState();
+    const [Email,SetEmail] = useState();
     const [Password,SetPassword] = useState();
+    const [ErrorLog,SetErrorLog] = useState('');
 
     
     useEffect(() => {
@@ -21,13 +23,31 @@ function Login() {
         }
     },[]);
 
-    function handleLogin() {
-        if(UserName == 'khang' && Password == '123') {
-            localStorage.setItem("username","khang");
-            localStorage.setItem("password",'123');
-            patch(actions.setToken(true));
-            navigate('/HOME');
-        }
+    function Logger() {
+        if(ErrorLog != '') return <div className={styles.wrong}>{ErrorLog}</div>
+    }
+
+    async function validPassword() {
+        const dt = {Email,Password};
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/checkaccount`,dt)
+        return res.data;
+    }
+
+    function validEmail() {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Email)) return true;
+        else return false;
+    }
+
+    async function handleLogin() {
+        
+        if(!validEmail()) {SetErrorLog('Email không hợp lệ'); return;}
+        
+        let res = await validPassword();
+        if(res != 'correct') {SetErrorLog(res); return;}
+        
+        localStorage.setItem("email",Email);
+        patch(actions.setToken(true));
+        navigate('/HOME');
     }
 
     return (
@@ -46,12 +66,16 @@ function Login() {
                 <div className={styles.input}>
                     <div className={styles.username}>
                         <img src={user_login} />
-                        <input type="text" onChange={(e)=>SetUserName(e.target.value)}/>
+                        <input type="text" 
+                        placeholder='Email ...'
+                        onChange={(e)=>SetEmail(e.target.value)}/>
                       
                     </div>
                     <div className={styles.password}>
                         <img src={password_login} />
-                        <input type="password" onChange={(e)=>SetPassword(e.target.value)}/>
+                        <input type="password" 
+                        placeholder='Mật khẩu ...'
+                        onChange={(e)=>SetPassword(e.target.value)}/>
                     </div>
                     <div className={styles.option}>
                         <div>
@@ -67,7 +91,11 @@ function Login() {
                         <span>ĐĂNG KÍ</span>
                     </div>
                 </div>
+                
+                <Logger />
+                
             </div>
+
         </div>
         
     );

@@ -12,7 +12,7 @@ function ShowHistory() {
    
     useEffect(() => {
         
-        axios.get(`${process.env.REACT_APP_API_URL}/api/${gbs.currentState}_${gbs.sortState}`)
+        axios.get(`${process.env.REACT_APP_API_URL}/api/${gbs.currentState}`)
             .then((res) => {
                 setList(res.data);
             })
@@ -22,12 +22,21 @@ function ShowHistory() {
     },[gbs])
 
     function handleClick(i) {
-        dispatch(actions.setSortState(i));
+        let tmp;
+        if (i === 'giam') {
+          tmp = [...list].sort((a, b) => b.MONEY - a.MONEY);
+        } else if (i === 'tang') {
+          tmp = [...list].sort((a, b) => a.MONEY - b.MONEY);
+        } else {
+          tmp = [...list].sort((a, b) => a.ID - b.ID);
+        }
+        setList(tmp);
     }
+      
 
     function handleRemove(dt) {
         dispatch(actions.setLoader(true));
-        axios.post(`${process.env.REACT_APP_API_URL}/api/remove`,dt)
+        axios.post(`${process.env.REACT_APP_API_URL}/crud/remove`,dt)
             .then((res) => {
                 dispatch(actions.setLoader(false));
                 dispatch(actions.setRender());

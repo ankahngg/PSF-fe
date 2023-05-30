@@ -25,7 +25,7 @@ const initState = {
     sortState : "tg",
     currentState : "week"+Weekth+"_out",
     Loader : 0,
-    Token : (localStorage.getItem("username") != null)
+    Token : (localStorage.getItem("email") != null)
 };
 
 

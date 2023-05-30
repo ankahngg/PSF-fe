@@ -31,7 +31,7 @@ function RightBar() {
             MoneyInput : +MoneyInput.substr(1,MoneyInput.length-1),
             NoteInput
         }
-        axios.post(`${process.env.REACT_APP_API_URL}/api/add`,data)
+        axios.post(`${process.env.REACT_APP_API_URL}/crud/add`,data)
             .then(res => {
                 dispatch(actions.setLoader(false));
                 SetError(2);
