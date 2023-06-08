@@ -113,3 +113,29 @@
     font-size: 20px;
     color: red;
 }
+
+.GgLogin {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    button {
+        background-color: #f2f0e0;
+        color: black;
+        border: none;
+        align-items: center;
+        display: flex;
+        padding: 10px;
+        font-size: 20px;
+        border-radius: 10px;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        img {
+            margin-right: 10px;
+        }
+    }
+}

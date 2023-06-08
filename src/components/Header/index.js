@@ -11,7 +11,7 @@ function Header() {
     const navigate = useNavigate();
     function handleLogout() {
         localStorage.clear();
-        patch(actions.setToken(false));
+        patch(actions.setUserId(''));
         navigate('/LOGIN');
     }
 
@@ -19,7 +19,7 @@ function Header() {
         <React.Fragment>
             <div className={styles.left}>LOGO ..</div>
             <div className={styles.right}>
-                XIN CHÀO USER !
+                XIN CHÀO {localStorage.getItem('name')} !
                 <img src={account_img}/>
                 <img src={logout_img} onClick={() => handleLogout()}/>
             </div>

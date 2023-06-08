@@ -1,70 +1,109 @@
 import * as types from './constants';
 
-
-
-const dayLeft = function() {
+const dayLeft = function () {
     const date = new Date();
-    const d = new Date(date.getFullYear(), date.getMonth()+1,0);
+    const d = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     return d.getDate() - date.getDate() + 1;
 }
 
+function daysInMonth (month, year) {
+    return new Date(year, month, 0).getDate();
+}
+
 const date = new Date();
-const Weekth = Math.ceil(date.getDate() / 7);
+const Week = Math.ceil(date.getDate() / 7);
+const Year = date.getFullYear();
 const Month = date.getMonth() + 1;
-const Dateth = date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear();
+const Dateth = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
 const Leftth = dayLeft();
 
 
 const initState = {
-    date,
-    Weekth,
-    Month,
-    Dateth,
-    Leftth,
-    Render : 0,
-    sortState : "tg",
-    currentState : "week"+Weekth+"_out",
-    Loader : 0,
-    Token : (localStorage.getItem("email") != null)
+    Week, // Week now
+    Month, // Month now
+    Year, // Year now
+    Dateth, // Date now
+    Leftth, // Day left
+
+    CrKind: 'out',
+    CrRange: `week${Week}`,
+    CrWeek : Week,
+    CrYear: Year,
+    CrMonth: Month,
+    CrState : 'month',
+    CrDateth : Dateth,
+
+    Loader: 0,
+    Render: 0,
+    UserId: (localStorage.getItem('id') ? localStorage.getItem('id') : ''),
 };
 
 
-function reducer(state,action) {
-    switch(action.type) {
-        case types.SET_CURRENT_STATE:
-            return {
-                ...state,
-                currentState : action.payload
-            }
+function reducer(state, action) {
+    switch (action.type) {
 
-        case types.SET_SORT_STATE:
-            return {
-                ...state,
-                sortState : action.payload
-            }
-        
         case types.SET_LOADER:
             return {
                 ...state,
-                Loader : action.payload
+                Loader: action.payload
             }
-        
+
         case types.SET_RENDER:
             return {
                 ...state,
-                Render : !state.Render
+                Render: !state.Render
             }
 
-        case types.SET_TOKEN:
+        case types.SET_USERID:
             return {
                 ...state,
-                Token : action.payload
+                UserId: action.payload
+            }
+        case types.SET_CURRENT_MONTH:
+            return {
+                ...state,
+                CrMonth: action.payload
+            }
+        case types.SET_CURRENT_YEAR:
+            return {
+                ...state,
+                CrYear: action.payload
+            }
+
+        case types.SET_CURRENT_RANGE:
+            return {
+                ...state,
+                CrRange: action.payload
+            }
+            
+        case types.SET_CURRENT_KIND:
+            return {
+                ...state,
+                CrKind: action.payload
             }
         
+        case types.SET_CURRENT_WEEK:
+        return {
+            ...state,
+            CrWeek: action.payload
+        }
+
+        case types.SET_CURRENT_STATE:
+        return {
+            ...state,
+            CrState: action.payload
+        }
+
+        case types.SET_CURRENT_DATETH:
+        return {
+            ...state,
+            CrDateth: action.payload
+        }
+
         default:
             throw new Error('invalid action');
     }
 }
 
 export default reducer;
-export {initState};
+export { initState };

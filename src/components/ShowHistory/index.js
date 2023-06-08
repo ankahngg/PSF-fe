@@ -12,7 +12,7 @@ function ShowHistory() {
    
     useEffect(() => {
         
-        axios.get(`${process.env.REACT_APP_API_URL}/api/${gbs.currentState}`)
+        axios.get(`${process.env.REACT_APP_API_URL}/api/?range=${gbs.CrRange}&kind=${gbs.CrKind}&year=${gbs.CrYear}&month=${gbs.CrMonth}&id=${gbs.UserId}`)
             .then((res) => {
                 setList(res.data);
             })
@@ -35,8 +35,19 @@ function ShowHistory() {
       
 
     function handleRemove(dt) {
+        const data = {
+            year : gbs.CrYear,
+            month : gbs.CrMonth,
+            week : gbs.CrWeek,
+            range : gbs.CrRange,
+            date : dt.DATE,
+            id : gbs.UserId,
+            ID : dt.ID,
+            kind : dt.KIND,
+        }
+        
         dispatch(actions.setLoader(true));
-        axios.post(`${process.env.REACT_APP_API_URL}/crud/remove`,dt)
+        axios.post(`${process.env.REACT_APP_API_URL}/crud/remove`,data)
             .then((res) => {
                 dispatch(actions.setLoader(false));
                 dispatch(actions.setRender());
@@ -51,7 +62,7 @@ function ShowHistory() {
         <div className={styles.container}>
             <div className={styles.header}>
                 <div className={styles.date}>
-                    {gbs.Dateth}
+                    {gbs.CrDateth}
                 </div>
                 <div className={styles.sortButton}>
                     <span>SẮP XẾP</span>
@@ -73,7 +84,8 @@ function ShowHistory() {
                             return (
                                 <tr key={index}>
                                     <td>{value.DATE}</td>
-                                    <td>{value.MONEY}k</td>
+                                    <td className={(value.KIND == 'OUT')?styles.moneyOut:styles.moneyIn}>
+                                    {value.MONEY}k</td>
                                     <td className={styles.note}>{value.NOTE}</td>
                                     <td>
                                         <button 

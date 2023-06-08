@@ -1,0 +1,36 @@
+.transButton {
+    position: relative;
+    height: 70px;
+    button {
+        padding: 10px 20px;
+        border-radius: 20px;
+        border: none;
+        position: absolute;
+        font-size: 20px;
+    }
+
+    .transMonth{
+        left: 70px;
+        z-index: 1;
+    }
+    .transYear {
+        z-index: 2;
+    }
+
+    button:hover {
+        cursor: pointer;
+        background-color: #f2e57e;
+    }
+}
+
+.yearDisplay {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.onFocus {
+    background-color: #f2e57e;
+}
+.unFocus {
+    background-color: #f2f0e0;
+}

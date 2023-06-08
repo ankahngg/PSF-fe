@@ -4,8 +4,6 @@ import { useStore, actions } from '../../store';
 import Loader from '../Loader';
 import axios from 'axios';
 
-
-
 function RightBar() {
     const [gbs,dispatch] = useStore();
     const [MoneyInput,SetMoneyInput] = useState('');
@@ -23,11 +21,18 @@ function RightBar() {
 
     function handleValid() {
         dispatch(actions.setLoader(true));
-        
+
+        function daysInMonth (month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
         const data = {
-            kind : (MoneyInput[0] == '-' ? 'out' : 'in'),
-            id : gbs.Weekth,
-            date : gbs.Dateth,
+            year : gbs.CrYear,
+            month : gbs.CrMonth,
+            range : gbs.CrRange,
+            id : gbs.UserId,
+            date: gbs.CrDateth,
+            kind : (MoneyInput[0] == '-' ? 'OUT' : 'IN'),
             MoneyInput : +MoneyInput.substr(1,MoneyInput.length-1),
             NoteInput
         }

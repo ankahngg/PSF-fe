@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useStore, actions } from '../../store';
 
-
 import online from './online.png';
 
 function Row1() {
@@ -16,41 +15,75 @@ function Row1() {
     const [Week4, setWeek4] = useState([]);
     const [Week5, setWeek5] = useState([]);
 
+    function daysInMonth (month, year) {
+        return new Date(year, month, 0).getDate();
+    }
+
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/api/months_data`)
+        axios.get(`${process.env.REACT_APP_API_URL}/api/monthsdata?year=${gbs.CrYear}&month=${gbs.CrMonth}&id=${gbs.UserId}`)
             .then(({data}) => {
-                setWeek1(data[0]['WEEK1_OUT']);
-                setWeek2(data[0]['WEEK2_OUT']);
-                setWeek3(data[0]['WEEK3_OUT']);
-                setWeek4(data[0]['WEEK4_OUT']);
-                setWeek5(data[0]['WEEK5_OUT']);
+                let sl = daysInMonth(gbs.CrMonth,gbs.CrYear);
+                
+                if(gbs.CrYear != gbs.Year || gbs.CrMonth != gbs.Month || 1 <= gbs.Week) 
+                    setWeek1(data[0]['WEEK1_OUT']);
+                else setWeek1('...');
+
+                if(gbs.CrYear != gbs.Year || gbs.CrMonth != gbs.Month || 2 <= gbs.Week) 
+                    setWeek2(data[0]['WEEK2_OUT']);
+                else setWeek2('...');
+
+                if(gbs.CrYear != gbs.Year || gbs.CrMonth != gbs.Month || 3 <= gbs.Week) 
+                    setWeek3(data[0]['WEEK3_OUT']);
+                else setWeek3('...');
+
+                if(gbs.CrYear != gbs.Year || gbs.CrMonth != gbs.Month || 4 <= gbs.Week) 
+                    setWeek4(data[0]['WEEK4_OUT']);
+                else setWeek4('...');
+
+                if((gbs.CrYear != gbs.Year || gbs.CrMonth != gbs.Month || 5 <= gbs.Week) && (Math.ceil(1.0*sl/7) == 5))
+                    setWeek5(data[0]['WEEK5_OUT']);
+                else setWeek5('...');
             })
         }
     ,[gbs.Render])   
+    
+    function daysInMonth (month, year) {
+        return new Date(year, month, 0).getDate();
+    }
 
-
-    function get(id) {
-        if (id == gbs.currentState) return styles.onFocus + " " + styles.week;
+    function get(range,kind) {
+        if (range == gbs.CrRange && kind == gbs.CrKind) return styles.onFocus + " " + styles.week;
         else return styles.week;
     }
 
-    function handleClick(id) {
-        dispatch(actions.setCurrentState(id));
-        dispatch(actions.setSortState('tg'));
+    function handleClick(range,kind,data,number) {
+        if(data == '...') return;
+        dispatch(actions.setCrRange(range));
+        dispatch(actions.setCrKind(kind));
+
+
+        if(gbs.Year == gbs.CrYear && gbs.Month == gbs.CrMonth && gbs.Week == number) 
+            dispatch(actions.setCrDateth(gbs.Dateth));
+        else {
+            const sl = daysInMonth(gbs.CrMonth,gbs.CrYear);
+            const day = Math.min(7*number,sl);
+            dispatch(actions.setCrDateth(`${day}-${gbs.CrMonth}-${gbs.CrYear}`));
+        }
     }
 
     function Week({ number, data }) {
-        
-        const id = `week${number}_out`; 
+        const range = `week${number}`;
+        const kind = `out`;
 
         return (
-            <td className={get(id)} onClick={() => handleClick(id)}>
+            <td className={get(range,kind)} 
+            onClick={() => handleClick(range,kind,data,number)}>
                 <div>TUẦN {number}</div>
                 {
-                    (number > gbs.Weekth) ? (<div>...</div>) : (<div>{data}k</div>)
+                    (data == '...' ? <div>{data}</div> : <div className={styles.moneyOut}>{data}k</div>)
                 }
                 {  
-                    number == gbs.Weekth && <img src={online} />
+                    (number == gbs.Week && gbs.Month == gbs.CrMonth && gbs.Year == gbs.CrYear)  && <img src={online} />
                 }
             </td>
         )
@@ -59,7 +92,7 @@ function Row1() {
     return (
         <React.Fragment>
             <td className={styles.month}>
-                THÁNG {gbs.Month}
+                THÁNG {gbs.CrMonth}
             </td>
 
             <Week number={1} data={Week1} />

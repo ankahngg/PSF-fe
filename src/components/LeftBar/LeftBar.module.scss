@@ -8,12 +8,12 @@
 
 
 
-.month_in:hover {
+.in:hover {
         cursor: pointer;
         background-color: #e6e4c0;
 }
 
-.month_out:hover {
+.out:hover {
     cursor: pointer;
     background-color: #e6e4c0;
 }
@@ -54,6 +54,14 @@
     .thu {
         width: 55px;
     }
+}
+
+.moneyIn {
+    color: lightgreen;
+}
+
+.moneyOut {
+    color: #ff7377;
 }
 
 
