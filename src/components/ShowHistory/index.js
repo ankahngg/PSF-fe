@@ -80,6 +80,7 @@ function ShowHistory() {
                         <th></th>
                     </tr>
                     {
+                        
                         list.map(function(value,index) {
                             return (
                                 <tr key={index}>

@@ -19,6 +19,7 @@ function Header() {
         <React.Fragment>
             <div className={styles.left}>LOGO ..</div>
             <div className={styles.right}>
+                <div className={styles.date}>{gbs.Dateth} |</div>
                 XIN CHÀO {localStorage.getItem('name')} !
                 <img src={account_img}/>
                 <img src={logout_img} onClick={() => handleLogout()}/>

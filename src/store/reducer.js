@@ -18,6 +18,7 @@ const Dateth = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFull
 const Leftth = dayLeft();
 
 
+
 const initState = {
     Week, // Week now
     Month, // Month now
@@ -36,10 +37,13 @@ const initState = {
     Loader: 0,
     Render: 0,
     UserId: (localStorage.getItem('id') ? localStorage.getItem('id') : ''),
+
+    WindowSize : window.innerWidth,
 };
 
 
 function reducer(state, action) {
+    
     switch (action.type) {
 
         case types.SET_LOADER:
@@ -99,6 +103,13 @@ function reducer(state, action) {
             ...state,
             CrDateth: action.payload
         }
+
+        case types.SET_WINDOW_SIZE:
+        return {
+            ...state,
+            WindowSize: action.payload
+        }
+
 
         default:
             throw new Error('invalid action');

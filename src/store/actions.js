@@ -39,7 +39,12 @@ export const setCrState = payload => ({
     type : actions.SET_CURRENT_STATE,
     payload
 })
+
 export const setCrDateth = payload => ({
     type : actions.SET_CURRENT_DATETH,
+    payload
+})
+export const setWindowSize = payload => ({
+    type : actions.SET_WINDOW_SIZE,
     payload
 })

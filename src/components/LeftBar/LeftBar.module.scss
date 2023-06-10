@@ -23,9 +23,11 @@
 
 .tem {
     position: relative;
-    width: 200px;
+    padding: 20px;
+    width: 180px;
     text-align: center;
-    padding: 20px 5px;
+    align-items: center;
+    
 
 
     div:first-child {
@@ -65,4 +67,19 @@
 }
 
 
+@media only screen and (max-width:800px){
+    .tem {
+        width: 170px;
+       padding:15px;
+    }
+    .dayLeft {
+        display: flex;
+        align-items: center;
+    }
+}
 
+table, th, td, tr {
+    border: 1px solid;
+    border-collapse: collapse;
+    
+}

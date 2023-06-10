@@ -8,6 +8,8 @@ export const SET_CURRENT_YEAR = 'set_current_year';
 export const SET_CURRENT_WEEK = 'set_current_week';
 export const SET_CURRENT_STATE = 'set_current_state';
 export const SET_CURRENT_DATETH = 'set_current_dateth';
+export const SET_WINDOW_SIZE = 'set_current_size';
+
 
 
 

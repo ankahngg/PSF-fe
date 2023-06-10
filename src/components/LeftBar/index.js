@@ -68,7 +68,7 @@ function LeftBar() {
 
     return (
         <React.Fragment>
-            <div className={get("day_left")}>
+            <div className={get("day_left") + " " + styles.dayLeft}>
                 <div>
                     Còn
                 </div>

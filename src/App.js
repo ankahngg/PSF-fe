@@ -12,6 +12,7 @@ function App() {
       <Routes>
         <Route path="LOGIN" element={gbs.UserId == '' ? <Login /> : <Navigate to="/HOME" /> }/>
         <Route path="/" element={gbs.UserId != '' ? <Layout /> : <Navigate to="/LOGIN" />}>
+          <Route index element={<Home />} />
           <Route path="*" element={<Home />} />
           <Route path="HOME" element={<Home />} />
           <Route path="STATISTIC" element={<Statistic />} />

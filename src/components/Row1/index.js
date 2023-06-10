@@ -75,6 +75,23 @@ function Row1() {
         const range = `week${number}`;
         const kind = `out`;
 
+        if(gbs.WindowSize <= 800) 
+        return (
+            <tr 
+            onClick={() => handleClick(range,kind,data,number)}>
+                <div className={get(range,kind)}>
+
+                    <div>TUẦN {number}</div>
+                    {
+                        (data == '...' ? <div>{data}</div> : <div className={styles.moneyOut}>{data}k</div>)
+                    }
+                    {  
+                        (number == gbs.Week && gbs.Month == gbs.CrMonth && gbs.Year == gbs.CrYear)  && <img src={online} />
+                    }
+                </div>
+            </tr>
+        )
+        else 
         return (
             <td className={get(range,kind)} 
             onClick={() => handleClick(range,kind,data,number)}>
@@ -91,9 +108,7 @@ function Row1() {
     
     return (
         <React.Fragment>
-            <td className={styles.month}>
-                THÁNG {gbs.CrMonth}
-            </td>
+            {(gbs.WindowSize > 800?<td className={styles.month}>THÁNG {gbs.CrMonth}</td>:<></>)}
 
             <Week number={1} data={Week1} />
             <Week number={2} data={Week2} />
@@ -101,7 +116,7 @@ function Row1() {
             <Week number={4} data={Week4} />
             <Week number={5} data={Week5} />
 
-            <td className={styles.month}>NHẬP LIỆU</td>
+            {(gbs.WindowSize > 800?<td className={styles.month}>NHẬP LIỆU</td>:<></>)}
         </React.Fragment>
     )
 }

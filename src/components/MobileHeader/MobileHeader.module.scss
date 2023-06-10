@@ -1,0 +1,89 @@
+* {
+    box-sizing: border-box;
+}
+.container {
+    display: flex;
+    align-items: center;
+    
+    text-align: center;
+    justify-content: space-between;
+
+    .left {
+        font-size: 25px;
+        height: 100%;
+        background-color: #f2f0e0;
+        display: flex;
+
+        .HOME, .STATISTIC {
+            padding : 10px;
+        }
+    }
+    
+    .right {
+        height: 102px;
+        width: 100%;
+        background-color: #c7b299;
+        align-items: center;
+        display: flex;
+        justify-content: end;
+        .col1 {
+            font-size: 25px;
+            padding: 5px;
+        }
+        .name {
+            font-weight: bold;
+        }
+        .col2 img{
+            width: 50px;
+            padding: 5px;
+        }
+        img:hover {
+            cursor: pointer;
+        }
+        
+    }
+
+}
+
+.onFocus {
+    background-color: #f2e57e;
+}
+a {
+    color: black;
+}
+
+a:link {
+    text-decoration: none;
+    color: black;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.home  {
+    
+    &:hover {
+        cursor: pointer;
+    }
+   
+    
+}
+
+.statistic {
+    &:hover {
+        cursor: pointer;
+    }
+   
+}
+.logo {
+    border-radius: 10px;
+}

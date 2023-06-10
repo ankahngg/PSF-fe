@@ -1,0 +1,33 @@
+
+table, th, td, tr {
+    border: 1px solid;
+    border-collapse: collapse;
+    
+}
+
+
+.TopAlign {
+    vertical-align: top;
+  }
+
+  .yearDisplay {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.row0 {
+  display: flex;
+  align-items: center;
+  button {
+    margin-left: 10px;
+    font-size: 18px;
+    background-color: #f2f0e0;
+    border-radius: 10px;
+    border: none;
+    &:hover {
+      cursor: pointer;
+      background-color: #f2e57e;
+    }
+  }
+}
+
