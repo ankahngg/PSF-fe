@@ -48,3 +48,11 @@ export const setWindowSize = payload => ({
     type : actions.SET_WINDOW_SIZE,
     payload
 })
+export const setYearData = payload => ({
+    type : actions.SET_YEAR_DATA,
+    payload
+})
+export const setMonthData = payload => ({
+    type : actions.SET_YEAR_DATA,
+    payload
+})

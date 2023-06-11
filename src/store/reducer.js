@@ -50,9 +50,11 @@ const initState = {
 
     YearData
 
+
     
     
 };
+
 
 
 function reducer(state = initState, action) {
@@ -126,18 +128,16 @@ function reducer(state = initState, action) {
         case types.SET_YEAR_DATA:
             const payload = action.payload;
             const tmp = {...state.YearData};
-            tmp[payload.year][payload.month] = {
+            tmp[`year${payload.year}`][`month${payload.month}`] = {
                 in : payload.in,
                 out : payload.out
-            }
-            tmp[payload.stt] = {
-                in : payload.in,
-                in : payload.out
             }
             return {
                 ...state,
                 YearData: tmp
             }
+        
+        
 
 
         default:

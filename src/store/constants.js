@@ -9,6 +9,10 @@ export const SET_CURRENT_WEEK = 'set_current_week';
 export const SET_CURRENT_STATE = 'set_current_state';
 export const SET_CURRENT_DATETH = 'set_current_dateth';
 export const SET_WINDOW_SIZE = 'set_current_size';
+export const SET_YEAR_DATA = 'set_year_data';
+export const SET_MONTH_DATA = 'set_month_data';
+
+
 
 
 

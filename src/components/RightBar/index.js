@@ -43,6 +43,10 @@ function RightBar() {
                 SetMoneyInput('');
                 SetNoteInput('');
                 dispatch(actions.setRender());
+                const val = gbs.YearData[`year${gbs.CrYear}`][`month${gbs.CrMonth}`];
+                if(data.kind == '-') val.out += data.MoneyInput;
+                else val.in += data.MoneyInput;
+                dispatch(actions.setYearData({year:gbs.CrYear,month:gbs.CrMonth,in:val.in,out:val.out}));
             })
             .catch(err => {
                 console.log(err);
