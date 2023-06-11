@@ -11,9 +11,6 @@ const len = 5;
 
 
 function YearChoosen() {
-    const [months, setMonths] = useState([
-        [0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]
-    ]);
     const [gbs,dispatch] = useStore();
     const [YearState,SetYearState] = useState(year);
     const listYears = [];
@@ -26,26 +23,30 @@ function YearChoosen() {
         return new Date(year, month, 0).getDate();
     }
 
-    function setMonth(month,value1,value2)
-    {
-        setMonths(prevMonths => {
-            const updatedMonths = [...prevMonths];
-            updatedMonths[month] = [value1,value2];
-            return updatedMonths;
-        });
-    }
 
     async function getdata(month,year,userid) {
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/monthsdata?year=${year}&month=${month}&id=${userid}`);
-        const data = res.data;
-        if(data == "khong co du lieu" || (year == gbs.Year && month > gbs.Month)) 
-            setMonth(month,'...','...');
-        else 
-            setMonth(month,data[0]['MONTH_OUT'],data[0]['MONTH_IN']);
+        // if(gbs.YearData[`year${year}`][`month${month}`] != -1) return;
+        // const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/monthsdata?year=${year}&month=${month}&id=${userid}`);
+        // const data = res.data;
+        // if(data == "khong co du lieu" || (year == gbs.Year && month > gbs.Month)) 
+        //     dispatch(actions.setYearData({
+        //         year : `year${year}`,
+        //         month : `month${month}`,
+        //         in : '...',
+        //         out : '...'
+        //     }))
+           
+        // else 
+        //     dispatch(actions.setYearData({
+        //         year : `year${year}`,
+        //         month : `month${month}`,
+        //         in : data[0]['MONTH_IN'],
+        //         out : data[0]['MONTH_OUT']
+        //     }))
     }
 
     function handleClick(val) {
-        if(months[val][0] == '...') return;
+        if(gbs.YearData[`year${YearState}`][`month${val}`].in == '...') return;
 
         dispatch(actions.setCrYear(YearState));
         dispatch(actions.setCrMonth(val));
@@ -62,6 +63,7 @@ function YearChoosen() {
     useEffect(() => {
         for(let i=1;i<=12;i++) getdata(i,YearState,gbs.UserId)
     },[YearState])
+
 
     return (
         <div className={styles.container}>
@@ -94,11 +96,11 @@ function YearChoosen() {
                                     </div>
                                     <div>
                                         <span>CHI :</span> 
-                                        <span className={styles.moneyOut}> {months[value][0]}k</span>
+                                        <span className={styles.moneyOut}> {gbs.YearData[`year${YearState}`][`month${value}`].out}k</span>
                                     </div>
                                     <div>
                                         <span>THU :</span> 
-                                        <span className={styles.moneyIn}> {months[value][1]}k</span>
+                                        <span className={styles.moneyIn}> {gbs.YearData[`year${YearState}`][`month${value}`].in}k</span>
                                     </div>
                                 </div>
 

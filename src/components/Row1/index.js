@@ -57,6 +57,7 @@ function Row1() {
     }
 
     function handleClick(range,kind,data,number) {
+        if(range == gbs.CrRange) return;
         if(data == '...') return;
         dispatch(actions.setCrRange(range));
         dispatch(actions.setCrKind(kind));

@@ -59,7 +59,6 @@ function Login() {
         const token = response.access_token;
         const data = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${token}`)
         const dt = data.data;
-       
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/crud/initialCreate`,dt);
 
         localStorage.setItem("name",dt.name);

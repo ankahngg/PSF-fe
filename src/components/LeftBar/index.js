@@ -33,6 +33,9 @@ function LeftBar() {
         function daysInMonth (month, year) {
             return new Date(year, month, 0).getDate();
         }
+        if(i == 1 && gbs.CrRange == 'month' && gbs.CrKind == 'out') return;
+        if(i == 2 && gbs.CrRange == 'month' && gbs.CrKind == 'in') return;
+
 
         if(i == 1) {
             dispatch(actions.setCrRange("month"));
