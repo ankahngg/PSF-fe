@@ -18,6 +18,14 @@ const Dateth = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFull
 const Leftth = dayLeft();
 
 
+const len = 5;
+const YearData = {};
+
+for(let i=Year; i >= Year-len+1; i--) {
+    YearData[`year${i}`] = {}
+    for(let j=1;j<=12;j++) YearData[`year${i}`][`month${j}`] = {in:-1,out:-1}
+}
+
 
 const initState = {
     Week, // Week now
@@ -39,10 +47,15 @@ const initState = {
     UserId: (localStorage.getItem('id') ? localStorage.getItem('id') : ''),
 
     WindowSize : window.innerWidth,
+
+    YearData
+
+    
+    
 };
 
 
-function reducer(state, action) {
+function reducer(state = initState, action) {
     
     switch (action.type) {
 
@@ -109,6 +122,22 @@ function reducer(state, action) {
             ...state,
             WindowSize: action.payload
         }
+
+        case types.SET_YEAR_DATA:
+            const payload = action.payload;
+            const tmp = {...state.YearData};
+            tmp[payload.year][payload.month] = {
+                in : payload.in,
+                out : payload.out
+            }
+            tmp[payload.stt] = {
+                in : payload.in,
+                in : payload.out
+            }
+            return {
+                ...state,
+                YearData: tmp
+            }
 
 
         default:
