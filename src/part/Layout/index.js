@@ -29,7 +29,7 @@ function Layout() {
 
         async function fetchData() {
             dispatch(stateSlice.actions.setLoader(true));
-            let len=5;
+            let len=1;
             for(let i=state.Year; i >= state.Year-len+1;i--) 
                 for(let j=1;j<=12;j++) {
                     const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/?year=${i}&month=${j}&id=${state.UserId}`);
@@ -48,7 +48,7 @@ function Layout() {
                         }
                     }
                 }  
-            await sleep(2000);
+            //await sleep(2000);
             dispatch(stateSlice.actions.setLoader(false));
         }
         fetchData();

@@ -3,10 +3,11 @@ import styles from './YearChoosen.module.scss';
 import online_png from '../../file/online.png';
 import {useSelector,useDispatch} from 'react-redux';
 import {stateSlice} from '../../redux/state/stateSlice';
+import Loader from '../../components/Loader'
 
 const date = new Date();
 const year = date.getFullYear();
-const len = 5;
+const len = 1;
 
 
 
@@ -44,6 +45,7 @@ function YearChoosen() {
 
     return (
         <div className={styles.container}>
+            {state.Loader && <Loader />}
             <div className={styles.row1}>
                 <label>NĂM</label>
                 <select name="year" className={styles.yearOption}
@@ -62,6 +64,7 @@ function YearChoosen() {
             </div>
 
             <div className={styles.row3}>
+                
                 <div className={styles.grid_container}>
                     {
                         listMonth.map((value, index) => {

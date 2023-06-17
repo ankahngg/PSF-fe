@@ -41,6 +41,7 @@ export const stateSlice = createSlice({
         UserId: (localStorage.getItem('id') ? localStorage.getItem('id') : ''),
 
         WindowSize : window.innerWidth,
+        
     },
     reducers: {
         setCrKind : (state,action) => {
