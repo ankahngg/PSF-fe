@@ -1,27 +1,28 @@
 import Table from '../Table';
 import MobileTable from '../MobileTable';
 import YearChoosen from '../YearChoosen';
-import { useEffect,useState } from 'react';
+import {useSelector,useDispatch} from 'react-redux';
+import {stateSlice} from '../../redux/state/stateSlice';
 
 import styles from './Home.module.scss'
-import { actions, useStore } from '../../store';
 
 function Home() {
-    const [gbs,dispatch] = useStore();
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state.state);
 
     return (
         <div className={styles.container}>
             <div className={styles.transButton}>
-                <button className={styles.transYear+" "+(gbs.CrState=='year'?styles.onFocus:styles.unFocus)} 
-                onClick={()=>dispatch(actions.setCrState('year'))}>NĂM</button>
-                <button className={styles.transMonth+" "+(gbs.CrState=='month'?styles.onFocus:styles.unFocus)} 
-                onClick={()=>dispatch(actions.setCrState('month'))}>THÁNG</button>
+                <button className={styles.transYear+" "+(state.CrState=='year'?styles.onFocus:styles.unFocus)} 
+                onClick={()=>dispatch(stateSlice.actions.setCrState('year'))}>NĂM</button>
+                <button className={styles.transMonth+" "+(state.CrState=='month'?styles.onFocus:styles.unFocus)} 
+                onClick={()=>dispatch(stateSlice.actions.setCrState('month'))}>THÁNG</button>
             </div>  
             {
                 
                 (
-                gbs.CrState == 'month' ?
-                (gbs.WindowSize <= 800?<MobileTable />:<Table />)
+                state.CrState == 'month' ?
+                (state.WindowSize <= 800?<MobileTable />:<Table />)
                 : 
                 <YearChoosen />
                 )

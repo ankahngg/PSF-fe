@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './YearChoosen.module.scss';
-import { actions, useStore } from '../../store';
-import axios from 'axios';
 import online_png from '../../file/online.png';
+import {useSelector,useDispatch} from 'react-redux';
+import {stateSlice} from '../../redux/state/stateSlice';
 
 const date = new Date();
 const year = date.getFullYear();
@@ -11,11 +11,12 @@ const len = 5;
 
 
 function YearChoosen() {
-    const [months, setMonths] = useState([
-        [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]
-    ]);
-    const [gbs, dispatch] = useStore();
-    const [YearState, SetYearState] = useState(year);
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state.state);
+    const data = useSelector((state) => state.data);
+
+   
+    const [YearState, SetYearState] = useState(state.CrYear);
     const listYears = [];
     const listMonth = [];
 
@@ -24,57 +25,31 @@ function YearChoosen() {
 
     function daysInMonth(month, year) {
         return new Date(year, month, 0).getDate();
-    }
+    } 
 
-    function setMonth(month, value1, value2) {
-        setMonths(prevMonths => {
-            const updatedMonths = [...prevMonths];
-            updatedMonths[month] = [value1, value2];
-            return updatedMonths;
-        });
-    }
-   
-    async function getdata(month, year, userid) {
-        const YearData = gbs.YearData[`year${year}`];
-        if(YearData[`month${month}`].in != -1) return;
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/monthsdata?year=${year}&month=${month}&id=${userid}`);
-        const data = res.data;
-        if (data == "khong co du lieu" || (year == gbs.Year && month > gbs.Month)) {
-            setMonth(month, '...', '...');
-            dispatch(actions.setYearData({ year: year, month: month, in: '...', out: '...' }));
-        }
+    function handleClick(month,val) {
+        if (val == '...') return;
+
+        dispatch(stateSlice.actions.setCrYear(YearState));
+        dispatch(stateSlice.actions.setCrMonth(month));
+        dispatch(stateSlice.actions.setCrRange('month'));
+        dispatch(stateSlice.actions.setCrKind('out'));
+        if (month == state.Month && YearState == state.Year) dispatch(stateSlice.actions.setCrDateth(state.Dateth));
         else {
-            setMonth(month, data[0]['MONTH_OUT'], data[0]['MONTH_IN']);
-            dispatch(actions.setYearData({ year: year, month: month, in: data[0]['MONTH_OUT'], out: data[0]['MONTH_IN'] }));
+            const day = daysInMonth(month, YearState);
+            dispatch(stateSlice.actions.setCrDateth(`${day}-${month}-${year}`));
         }
-
+        dispatch(stateSlice.actions.setCrState('month'));
     }
-
-    function handleClick(val) {
-        if (months[val][0] == '...') return;
-
-        dispatch(actions.setCrYear(YearState));
-        dispatch(actions.setCrMonth(val));
-        dispatch(actions.setCrRange('month'));
-        dispatch(actions.setCrKind('out'));
-        if (val == gbs.Month && YearState == gbs.Year) dispatch(actions.setCrDateth(gbs.Dateth));
-        else {
-            const day = daysInMonth(val, YearState);
-            dispatch(actions.setCrDateth(`${day}-${val}-${year}`));
-        }
-        dispatch(actions.setCrState('month'));
-    }
-
-    useEffect(() => {
-        for (let i = 1; i <= 12; i++) getdata(i, YearState, gbs.UserId)
-    }, [YearState])
 
     return (
         <div className={styles.container}>
             <div className={styles.row1}>
                 <label>NĂM</label>
                 <select name="year" className={styles.yearOption}
-                    onChange={(e) => SetYearState(e.target.value)}>
+                    onChange={(e) => SetYearState(e.target.value)}
+                    value={YearState}
+                    >
                     {
                         listYears.map((value, index) => {
                             return (<option key={index} value={value}>{value}</option>)
@@ -90,21 +65,26 @@ function YearChoosen() {
                 <div className={styles.grid_container}>
                     {
                         listMonth.map((value, index) => {
+                            let moneyIn = data[`year${YearState}`][`month${value}`].in;
+                            let moneyOut = data[`year${YearState}`][`month${value}`].out;
+                            if(YearState == state.Year && value > state.Month) 
+                                moneyIn = moneyOut = '...';
+
                             return (
                                 <div key={index}
-                                    className={styles.grid_items + (gbs.CrYear == YearState && gbs.CrMonth == value ? " " + styles.onFocus : "")}
-                                    onClick={() => handleClick(value)}>
-                                    {(gbs.Year == YearState && gbs.Month == value ? <img src={online_png} /> : <div></div>)}
+                                    className={styles.grid_items + (state.CrYear == YearState && state.CrMonth == value ? " " + styles.onFocus : "")}
+                                    onClick={() => handleClick(value,moneyIn)}>
+                                    {(state.Year == YearState && state.Month == value ? <img src={online_png} /> : <div></div>)}
                                     <div className={styles.thang}>
                                         THÁNG {value}
                                     </div>
                                     <div>
                                         <span>CHI :</span>
-                                        <span className={styles.moneyOut}> {gbs.YearData[`year${YearState}`][`month${value}`].out}k</span>
+                                        <span className={styles.moneyOut}> {moneyOut}k</span>
                                     </div>
                                     <div>
                                         <span>THU :</span>
-                                        <span className={styles.moneyIn}> {gbs.YearData[`year${YearState}`][`month${value}`].in}k</span>
+                                        <span className={styles.moneyIn}> {moneyIn}k</span>
                                     </div>
                                 </div>
 

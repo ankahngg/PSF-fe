@@ -4,14 +4,16 @@ import Layout from './part/Layout'
 import Statistic from './part/Statistic'
 import Login from './part/Login'
 import { Route,Routes,Navigate } from 'react-router-dom';
-import { useStore } from './store';
+import { useSelector } from 'react-redux';
+
 
 function App() {
-  const [gbs,patch] = useStore();
+  const state = useSelector((state) => state.state);
   return (
+   
       <Routes>
-        <Route path="LOGIN" element={gbs.UserId == '' ? <Login /> : <Navigate to="/HOME" /> }/>
-        <Route path="/" element={gbs.UserId != '' ? <Layout /> : <Navigate to="/LOGIN" />}>
+        <Route path="LOGIN" element={state.UserId == '' ? <Login /> : <Navigate to="/HOME" /> }/>
+        <Route path="/" element={state.UserId != '' ? <Layout /> : <Navigate to="/LOGIN" />}>
           <Route index element={<Home />} />
           <Route path="*" element={<Home />} />
           <Route path="HOME" element={<Home />} />

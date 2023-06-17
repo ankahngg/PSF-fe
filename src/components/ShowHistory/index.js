@@ -1,56 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import styles from './ShowHistory.module.scss';
 import axios from 'axios';
-import { useStore, actions } from '../../store';
-
+import {useSelector,useDispatch} from 'react-redux';
+import {stateSlice} from '../../redux/state/stateSlice';
+import {dataSlice} from '../../redux/data/dataSlice';
+import { listSelector } from '../../redux/selector';
 
 
 function ShowHistory() {
+    const dispatch = useDispatch();
+    const dt = useSelector(listSelector);
+    const [list,setList] = useState();
+    const state = useSelector((state) => state.state);
 
-    const [gbs,dispatch] = useStore();
-    const [list,setList] = useState([]);
+    useEffect(() =>{
+        setList(dt);
+    },[dt])
    
-    useEffect(() => {
-        
-        axios.get(`${process.env.REACT_APP_API_URL}/api/?range=${gbs.CrRange}&kind=${gbs.CrKind}&year=${gbs.CrYear}&month=${gbs.CrMonth}&id=${gbs.UserId}`)
-            .then((res) => {
-                setList(res.data);
-            })
-            .catch(() => {
-                setList([]);
-            })
-    },[gbs])
-
+   
     function handleClick(i) {
         let tmp;
         if (i === 'giam') {
-          tmp = [...list].sort((a, b) => b.MONEY - a.MONEY);
+          tmp = [...list].sort((a, b) => b.money - a.money);
         } else if (i === 'tang') {
-          tmp = [...list].sort((a, b) => a.MONEY - b.MONEY);
+          tmp = [...list].sort((a, b) => a.money - b.money);
         } else {
-          tmp = [...list].sort((a, b) => a.ID - b.ID);
+          tmp = [...list].sort((a, b) => a.id - b.id);
         }
+        console.log(tmp);
         setList(tmp);
     }
+   
       
-
     function handleRemove(dt) {
         const data = {
-            year : gbs.CrYear,
-            month : gbs.CrMonth,
-            week : gbs.CrWeek,
-            range : gbs.CrRange,
-            date : dt.DATE,
-            id : gbs.UserId,
-            ID : dt.ID,
-            kind : dt.KIND,
+            year : state.CrYear,
+            month : state.CrMonth,
+            week : state.CrWeek,
+            range : state.CrRange,
+            date : dt.date,
+            id : state.UserId,
+            ID : dt.id,
+            kind : dt.kind,
         }
+       
         
-        dispatch(actions.setLoader(true));
+        dispatch(stateSlice.actions.setLoader(true));
         axios.post(`${process.env.REACT_APP_API_URL}/crud/remove`,data)
             .then((res) => {
-                dispatch(actions.setLoader(false));
-                dispatch(actions.setRender());
+                dispatch(dataSlice.actions.removeNote(dt))
+                dispatch(stateSlice.actions.setLoader(false));
             })
             .catch((err) => {
                 console.log(err);
@@ -62,7 +61,7 @@ function ShowHistory() {
         <div className={styles.container}>
             <div className={styles.header}>
                 <div className={styles.date}>
-                    {gbs.CrDateth}
+                    {state.CrDateth}
                 </div>
                 <div className={styles.sortButton}>
                     <span>SẮP XẾP</span>
@@ -80,14 +79,14 @@ function ShowHistory() {
                         <th></th>
                     </tr>
                     {
-                        
+                        list &&
                         list.map(function(value,index) {
                             return (
                                 <tr key={index}>
-                                    <td>{value.DATE}</td>
-                                    <td className={(value.KIND == 'OUT')?styles.moneyOut:styles.moneyIn}>
-                                    {value.MONEY}k</td>
-                                    <td className={styles.note}>{value.NOTE}</td>
+                                    <td>{value.date}</td>
+                                    <td className={(value.kind == 'out')?styles.moneyOut:styles.moneyIn}>
+                                    {value.money}k</td>
+                                    <td className={styles.note}>{value.note}</td>
                                     <td>
                                         <button 
                                         onClick={() => handleRemove(value)}>

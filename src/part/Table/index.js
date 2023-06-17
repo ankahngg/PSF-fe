@@ -4,33 +4,39 @@ import ShowHistory from '../../components/ShowHistory';
 import RightBar from '../../components/RightBar';
 import React from 'react';
 import styles from './Table.module.scss'
-import { useStore, actions} from '../../store';
+import {stateSlice} from '../../redux/state/stateSlice';
+import {useSelector,useDispatch} from 'react-redux';
+import Loader from '../../components/Loader';
 
 function Table() {
-    const [gbs,dispatch] = useStore();
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state.state);
 
     function handleClick() {
-      dispatch(actions.setCrYear(gbs.Year));
-      dispatch(actions.setCrMonth(gbs.Month));
-      dispatch(actions.setCrRange('month'));
-      dispatch(actions.setCrKind('out'));
-      dispatch(actions.setCrDateth(gbs.Dateth));
+      dispatch(stateSlice.actions.setCrYear(state.Year));
+      dispatch(stateSlice.actions.setCrMonth(state.Month));
+      dispatch(stateSlice.actions.setCrRange('month'));
+      dispatch(stateSlice.actions.setCrKind('out'));
+      dispatch(stateSlice.actions.setCrDateth(state.Dateth));
     }
+
 
     return (
       <div className={styles.container}>
+       
         <div className={styles.row0}>
                 <div className={styles.yearDisplay}>
-                {gbs.CrYear}
+                {state.CrYear}
                 </div>
                 {(
-                  gbs.Year != gbs.CrYear || gbs.Month != gbs.CrMonth ? 
+                  state.Year != state.CrYear || state.Month != state.CrMonth ? 
                   <button onClick={() => handleClick()}>Quay trở về hiện tại</button>
                   :
                   <div></div>
                 )}
         </div>
-        <table>
+        <table className={styles.tableContainer}>
+          {state.Loader && <Loader />}
           <tr><Row1 /></tr>
           <tr>
             <td><LeftBar /></td>
@@ -40,6 +46,7 @@ function Table() {
         </table>
       </div>
     )
+    
   }
   
   export default Table;

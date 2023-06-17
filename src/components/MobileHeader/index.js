@@ -4,7 +4,9 @@ import statistic_logo from '../../file/statistic_logo.png';
 import account_img from '../../file/account.png';
 import logout_img from '../../file/logout_img.png';
 import {useNavigate,Link}  from 'react-router-dom';
-import { actions, useStore } from '../../store';
+import {useSelector,useDispatch} from 'react-redux';
+import {stateSlice} from '../../redux/state/stateSlice';
+
 
 import React, { useState } from 'react';
 
@@ -16,12 +18,13 @@ function getPage() {
 function MobileHeader() {
     const [State,SetState] = useState(getPage());
     const [Hover,SetHover] = useState(0);
-    const [gbs,patch] = useStore();
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state.state);
     const navigate = useNavigate();
 
     function handleLogout() {
         localStorage.clear();
-        patch(actions.setUserId(''));
+        dispatch(stateSlice.actions.setUserId(''));
         navigate('/LOGIN');
     }
 
@@ -61,7 +64,7 @@ function MobileHeader() {
             </div>
             <div className={styles.right}>
                 <div className={styles.col1}>
-                    <div className={styles.date}>{gbs.Dateth}</div>
+                    <div className={styles.date}>{state.Dateth}</div>
                     <div className={styles.name}>{localStorage.getItem('name')} !</div>
                 </div>
                 <div className={styles.col2}>

@@ -1,67 +1,44 @@
 import React from 'react';
-import { useState, useEffect} from 'react';
-import axios from 'axios';
 import styles from './LeftBar.module.scss';
-import { useStore, actions } from '../../store';
+import {useSelector,useDispatch} from 'react-redux';
+import {stateSlice} from '../../redux/state/stateSlice';
+import { moneyOutSelector, moneyInSelector } from '../../redux/selector';
 
 import Chi from './Chi.png';
 import Thu from './Thu.png'
 
 
 function LeftBar() {
-    const [gbs, dispatch] = useStore();
-    const [moneyIn, setmoneyIn] = useState();
-    const [moneyOut, setmoneyOut] = useState();
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state.state);
+    const data = useSelector((state) => state.data);
+   
+    const MoneyOut = useSelector(moneyOutSelector);
+    const MoneyIn = useSelector(moneyInSelector);
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}/api/monthsdata?year=${gbs.CrYear}&month=${gbs.CrMonth}&id=${gbs.UserId}`)
-            .then(({data}) => {
-
-                // cal total month_money_out
-                
-                setmoneyIn(data[0]['MONTH_IN']);
-                setmoneyOut(data[0]['MONTH_OUT']);
-                
-            })
-            .catch((res) => {
-                setmoneyOut(0);
-                setmoneyIn(0);
-            })
-    },[gbs.Render])
 
     function handleClick(i) {
         function daysInMonth (month, year) {
             return new Date(year, month, 0).getDate();
         }
 
-        if(i == 1) {
-            dispatch(actions.setCrRange("month"));
-            dispatch(actions.setCrKind("out"));
-            if(gbs.Year == gbs.CrYear && gbs.Month == gbs.CrMonth) 
-                dispatch(actions.setCrDateth(gbs.Dateth));
-            else {
-                const day = daysInMonth(gbs.CrMonth,gbs.CrYear);
-                dispatch(actions.setCrDateth(`${day}-${gbs.CrMonth}-${gbs.CrYear}`));
-            }
-        }
-        else {
-            dispatch(actions.setCrRange("month"));
-            dispatch(actions.setCrKind("in"));
-            if(gbs.Year == gbs.CrYear && gbs.Month == gbs.CrMonth) 
-                dispatch(actions.setCrDateth(gbs.Dateth));
-            else {
-                const day = daysInMonth(gbs.CrMonth,gbs.CrYear);
-                dispatch(actions.setCrDateth(`${day}-${gbs.CrMonth}-${gbs.CrYear}`));
-            }
-        }
+        dispatch(stateSlice.actions.setCrRange("month"));
+        if(i == 1) dispatch(stateSlice.actions.setCrKind("out"));
+        else dispatch(stateSlice.actions.setCrKind("in"));
 
+        if(state.Year == state.CrYear && state.Month == state.CrMonth) 
+            dispatch(stateSlice.actions.setCrDateth(state.Dateth));
+        else {
+            const day = daysInMonth(state.CrMonth,state.CrYear);
+            dispatch(stateSlice.actions.setCrDateth(`${day}-${state.CrMonth}-${state.CrYear}`));
+        }
     }
 
     function get(range,kind) {
         var classes = styles.tem;
         classes += " " + styles[kind];
         if(kind != 'in') classes += " " + styles.bdbottom;
-        if(range == gbs.CrRange && kind == gbs.CrKind) classes += " " + styles.focus;
+        if(range == state.CrRange && kind == state.CrKind) classes += " " + styles.focus;
         
         return classes;
     }
@@ -74,7 +51,7 @@ function LeftBar() {
                 </div>
                 <div>
                     {
-                        (gbs.CrMonth == gbs.Month && gbs.CrYear == gbs.Year ? gbs.Leftth : 0)
+                        (state.CrMonth == state.Month && state.CrYear == state.Year ? state.Leftth : 0)
                     }
                 </div>
                 <div>
@@ -86,7 +63,7 @@ function LeftBar() {
                     Đã
                 </div>
                 <div className={styles.moneyOut}>
-                    {moneyOut}k
+                    {MoneyOut}k
                 </div>
                 <img className={styles.chi} src={Chi} />
                 <div>
@@ -98,7 +75,7 @@ function LeftBar() {
                     Đã
                 </div>
                 <div className={styles.moneyIn}>
-                    {moneyIn}k
+                    {MoneyIn}k
                 </div>
                 <img className={styles.thu} src={Thu} />
                 <div>

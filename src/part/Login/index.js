@@ -5,13 +5,15 @@ import password_login from '../../file/password_login.png';
 import gg_logo from '../../file/gg_logo.png';
 import user_login from '../../file/user_login.png';
 import {useNavigate}  from 'react-router-dom';
-import { actions, useStore } from '../../store';
+import {useSelector,useDispatch} from 'react-redux';
+import {stateSlice} from '../../redux/state/stateSlice';
 import axios from 'axios';
 import { useGoogleLogin } from '@react-oauth/google';
 
 
 function Login() {
-    const [gbs,patch] = useStore();
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state.state);
     const navigate = useNavigate();
     const [Email,SetEmail] = useState();
     const [Password,SetPassword] = useState();
@@ -64,7 +66,7 @@ function Login() {
 
         localStorage.setItem("name",dt.name);
         localStorage.setItem("id",dt.id);
-        patch(actions.setUserId(dt.id));
+        dispatch(stateSlice.actions.setUserId(dt.id));
         navigate('/HOME');
     };
 

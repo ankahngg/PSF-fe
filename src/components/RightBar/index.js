@@ -1,11 +1,22 @@
 import styles from './RightBar.module.scss';
 import { useState } from 'react';
-import { useStore, actions } from '../../store';
 import Loader from '../Loader';
 import axios from 'axios';
+import {useSelector,useDispatch} from 'react-redux';
+import {stateSlice} from '../../redux/state/stateSlice';
+import {dataSlice} from '../../redux/data/dataSlice';
 
 function RightBar() {
-    const [gbs,dispatch] = useStore();
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state.state);
+    const noteId = useSelector((state) => {
+        const year = `year${state.state.CrYear}`;
+        const month = `month${state.state.CrMonth}`;
+        const l = state.data[year][month].list.length;
+        if(l == 0) return 1;
+        return state.data[year][month].list[l-1].id+1;
+    })
+
     const [MoneyInput,SetMoneyInput] = useState('');
     const [NoteInput,SetNoteInput] = useState('');
     const [Error,SetError] = useState(0);
@@ -20,33 +31,36 @@ function RightBar() {
     }
 
     function handleValid() {
-        dispatch(actions.setLoader(true));
+        dispatch(stateSlice.actions.setLoader(true));
 
         function daysInMonth (month, year) {
             return new Date(year, month, 0).getDate();
         }
 
         const data = {
-            year : gbs.CrYear,
-            month : gbs.CrMonth,
-            range : gbs.CrRange,
-            id : gbs.UserId,
-            date: gbs.CrDateth,
+            year : state.CrYear,
+            month : state.CrMonth,
+            range : state.CrRange,
+            id : state.UserId,
+            date: state.CrDateth,
             kind : (MoneyInput[0] == '-' ? 'OUT' : 'IN'),
             MoneyInput : +MoneyInput.substr(1,MoneyInput.length-1),
-            NoteInput
+            NoteInput,
+            noteId,
         }
         axios.post(`${process.env.REACT_APP_API_URL}/crud/add`,data)
             .then(res => {
-                dispatch(actions.setLoader(false));
+                dispatch(stateSlice.actions.setLoader(false));
                 SetError(2);
                 SetMoneyInput('');
                 SetNoteInput('');
-                dispatch(actions.setRender());
-                const val = gbs.YearData[`year${gbs.CrYear}`][`month${gbs.CrMonth}`];
-                if(data.kind == '-') val.out += data.MoneyInput;
-                else val.in += data.MoneyInput;
-                dispatch(actions.setYearData({year:gbs.CrYear,month:gbs.CrMonth,in:val.in,out:val.out}));
+                dispatch(dataSlice.actions.addNote({
+                    id : noteId,
+                    date : data.date,
+                    money : data.MoneyInput,
+                    kind : data.kind.toLowerCase(),
+                    note : data.NoteInput
+                }));
             })
             .catch(err => {
                 console.log(err);
@@ -59,11 +73,11 @@ function RightBar() {
     }
 
     function handleClick() {
+        // validator
         if(!MoneyInput.length) {handleError(); return;}
         if(MoneyInput[0] != '-' && MoneyInput[0] != '+') {handleError(); return;}
         if(MoneyInput.length == 1) {handleError(); return;}
         if(MoneyInput[1] == '0') {handleError(); return;}
-
         if(NoteInput.length > 30) {handleError(); return;}
         if(!isAllNumber()) {handleError(); return;}
 
@@ -82,6 +96,7 @@ function RightBar() {
     }
 
     return (
+        (state.CrYear == state.Year ?
         <div className={styles.container}>
             <div className={styles.instruction}>
                 <div>- : TIÊU</div>
@@ -107,8 +122,11 @@ function RightBar() {
                 <Log />    
             </div>
             
-            {(gbs.Loader) ? <Loader /> : <div></div>}
+            
         </div>
+        :
+        <div></div>
+        )
     )
 }
 
