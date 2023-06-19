@@ -31,7 +31,7 @@ export const dataSlice = createSlice({
             const arr = payload.date.split('-');
             const CrYear = `year${arr[2]}`;
             const CrMonth = `month${arr[1]}`;
-            const CrId =  state[CrYear][CrMonth].list.length;
+           
             state[CrYear][CrMonth].list.push({
                 id : payload.id,
                 date : payload.date,
@@ -51,6 +51,23 @@ export const dataSlice = createSlice({
             state[CrYear][CrMonth].list.splice(pos,1);
             if(payload.kind == 'in') state[CrYear][CrMonth].in -= +payload.money;
             else state[CrYear][CrMonth].out -= +payload.money;
+        },
+        clearNote : (state,action) => {
+            console.log('wtf');
+            const date = new Date();
+            const year = date.getFullYear();
+            for(let i=1;i<=12;i++) state[`year${year}`][`month${i}`] = {
+                in:0,
+                out:0,
+                list : [
+                    // id:1,
+                    // date:'12-5-2022',
+                    // money:'100',
+                    // kind:'in',
+                    // note :'buy food'
+                ]
+            }
+
         }
     }
 })

@@ -15,51 +15,50 @@ function sleep(ms) {
     })
 }
 
+
 function Layout() {
     const dispatch = useDispatch();
     const state = useSelector((state) => state.state);
-    const data = useSelector((state) => state.data);
-
+    const year = useSelector((state) => state.state.Year);
+    const id = useSelector((state) => state.state.UserId);
+    
+    async function fetchData() {
+        dispatch(stateSlice.actions.setLoader(true));
+        let len=1;
+        for(let i=year; i >= year-len+1;i--) 
+            for(let j=1;j<=12;j++) {
+                const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/?year=${i}&month=${j}&id=${id}`);
+                if(res.data != 'khong co du lieu') {
+                    
+                    for(let val of res.data) {
+                        dispatch(dataSlice.actions.addNote(
+                            {
+                                id : val.ID,
+                                date : val.DATE,
+                                money : val.MONEY,
+                                kind : val.KIND.toLowerCase(),
+                                note : val.NOTE
+                            }
+                        ))
+                    }
+                }
+            }  
+        dispatch(stateSlice.actions.setLoader(false));
+    }
 
     useEffect(() => {
+        
         function handleWindowResize() {
             dispatch(stateSlice.actions.setWindowSize(window.innerWidth))
         }
         window.addEventListener('resize', handleWindowResize);
 
-        async function fetchData() {
-            dispatch(stateSlice.actions.setLoader(true));
-            let len=1;
-            for(let i=state.Year; i >= state.Year-len+1;i--) 
-                for(let j=1;j<=12;j++) {
-                    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/?year=${i}&month=${j}&id=${state.UserId}`);
-                    if(res.data != 'khong co du lieu') {
-                        
-                        for(let val of res.data) {
-                            dispatch(dataSlice.actions.addNote(
-                                {
-                                    id : val.ID,
-                                    date : val.DATE,
-                                    money : val.MONEY,
-                                    kind : val.KIND.toLowerCase(),
-                                    note : val.NOTE
-                                }
-                            ))
-                        }
-                    }
-                }  
-            //await sleep(2000);
-            dispatch(stateSlice.actions.setLoader(false));
-        }
         fetchData();
         return () => {
             window.removeEventListener('resize', handleWindowResize);
+           
         };
-    }, []);
-    
-      
-    
-     
+    }, []);  
 
     if(state.WindowSize <= 800)
     return (

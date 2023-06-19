@@ -11,13 +11,15 @@ import store from './redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <GoogleOAuthProvider clientId="829079409564-1lqc7ola85ksq5ocuj5i7ipjegerqm7v.apps.googleusercontent.com">
-        <Provider store={store}>
-            <BrowserRouter>
-                    <App />
-            </BrowserRouter>
-        </Provider>
-    </GoogleOAuthProvider>
+  
+        <GoogleOAuthProvider clientId="829079409564-1lqc7ola85ksq5ocuj5i7ipjegerqm7v.apps.googleusercontent.com">
+            <Provider store={store}>
+                <BrowserRouter>
+                        <App />
+                </BrowserRouter>
+            </Provider>
+        </GoogleOAuthProvider>
+
 
 );
 

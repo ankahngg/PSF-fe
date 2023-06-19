@@ -5,15 +5,18 @@ import {useNavigate}  from 'react-router-dom';
 import React from 'react';
 import {useSelector,useDispatch} from 'react-redux';
 import {stateSlice} from '../../redux/state/stateSlice';
+import { dataSlice } from '../../redux/data/dataSlice';
 
 function Header() {
     const dispatch = useDispatch();
     const state = useSelector((state) => state.state);
+    
 
     const navigate = useNavigate();
     function handleLogout() {
-        localStorage.clear();
         dispatch(stateSlice.actions.setUserId(''));
+        localStorage.clear();
+        dispatch(dataSlice.actions.clearNote());
         navigate('/LOGIN');
     }
 

@@ -6,6 +6,8 @@ import logout_img from '../../file/logout_img.png';
 import {useNavigate,Link}  from 'react-router-dom';
 import {useSelector,useDispatch} from 'react-redux';
 import {stateSlice} from '../../redux/state/stateSlice';
+import { dataSlice } from '../../redux/data/dataSlice';
+
 
 
 import React, { useState } from 'react';
@@ -25,6 +27,7 @@ function MobileHeader() {
     function handleLogout() {
         localStorage.clear();
         dispatch(stateSlice.actions.setUserId(''));
+        dispatch(dataSlice.actions.clearNote());
         navigate('/LOGIN');
     }
 

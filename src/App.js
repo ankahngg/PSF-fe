@@ -8,18 +8,19 @@ import { useSelector } from 'react-redux';
 
 
 function App() {
-  const state = useSelector((state) => state.state);
+  const id = useSelector((state) => state.state.UserId);
   return (
-   
-      <Routes>
-        <Route path="LOGIN" element={state.UserId == '' ? <Login /> : <Navigate to="/HOME" /> }/>
-        <Route path="/" element={state.UserId != '' ? <Layout /> : <Navigate to="/LOGIN" />}>
-          <Route index element={<Home />} />
-          <Route path="*" element={<Home />} />
-          <Route path="HOME" element={<Home />} />
-          <Route path="STATISTIC" element={<Statistic />} />
-        </Route>  
-      </Routes>
+        
+        <Routes>
+          <Route path="LOGIN" element={id == '' ? <Login /> : <Navigate to="/" /> }/>
+          <Route path="/" element={id != '' ? <Layout /> : <Navigate to="/LOGIN" />}>
+            <Route index element={<Home />} />
+            <Route path="*" element={<Home />} />
+            <Route path="HOME" element={<Home />} />
+            <Route path="STATISTIC" element={<Statistic />} />
+          </Route>  
+        </Routes>
+    
       
   )
 }
