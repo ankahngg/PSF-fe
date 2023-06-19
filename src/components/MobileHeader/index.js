@@ -36,6 +36,8 @@ function MobileHeader() {
     }
 
     return (
+        <div className={styles.wrapper}>
+
         <div className={styles.container}>
             <div className={styles.left}>
                 <Link to="/HOME" className={styles.HOME}>
@@ -75,6 +77,7 @@ function MobileHeader() {
                     <img src={logout_img} onClick={() => handleLogout()}/>
                 </div>
             </div>
+        </div>
         </div>
     );
 }

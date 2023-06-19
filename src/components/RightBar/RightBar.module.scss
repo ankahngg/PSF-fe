@@ -46,3 +46,50 @@
         font-size: 20px;
     }
 }
+
+@media only screen and (max-width:800px){
+    .container {
+        padding : 20px;
+        width: 100%
+    }
+    .instruction {
+        font-size: 15px;
+    }
+
+    .input {
+        margin-top: 30px;
+        font-size: 15px;
+    
+        .moneyInput {
+            display: flex;
+            align-items: center;
+    
+            input {
+                width: 30%;
+                font-size: 15px;
+                margin-left: 25px;
+                margin-right: 20px;
+            }
+        }
+    
+        .noteInput {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+    
+            textarea {
+                width: 100% ;
+                font-size: 15px;
+                margin-left: 10px;
+            }
+        }
+    }
+    .submit {
+        text-align: center;
+        margin-top: 40px;
+        button {
+            font-size: 15px;
+        }
+    }
+
+}

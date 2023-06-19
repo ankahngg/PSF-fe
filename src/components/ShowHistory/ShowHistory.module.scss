@@ -58,3 +58,21 @@
     color: #ff7377;
 }
 
+@media only screen and (max-width:800px){
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+    .header {
+        font-size: 15px;
+    }
+    .historyDisplay {
+        font-size: 15px;
+    }
+    .sortButton {
+        button {
+            font-size: 15px;
+           
+        }
+    }
+}

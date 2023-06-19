@@ -6,6 +6,7 @@ import React from 'react';
 import styles from './MobileTable.module.scss'
 import {stateSlice} from '../../redux/state/stateSlice';
 import {useSelector,useDispatch} from 'react-redux';
+import Loader from '../../components/Loader';
 function MobileTable() {
     const dispatch = useDispatch();
     const state = useSelector((state) => state.state);
@@ -31,7 +32,8 @@ function MobileTable() {
                   <div></div>
                 )}
         </div>
-        <table>
+        <table className={styles.tableContainer}>
+            {state.Loader && <Loader />}
             <tr>
                 <td className={styles.LeftBar}><LeftBar /></td>
                 <td className={styles.Row1}><Row1 /></td>

@@ -44,7 +44,7 @@ function LeftBar() {
     }
 
     return (
-        <React.Fragment>
+        <div>
             <div className={get("day_left") + " " + styles.dayLeft}>
                 <div>
                     Còn
@@ -83,7 +83,7 @@ function LeftBar() {
                 </div>
             </div>
 
-        </React.Fragment>
+        </div>
     )
 }
 

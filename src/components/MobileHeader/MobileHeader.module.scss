@@ -1,15 +1,16 @@
 * {
     box-sizing: border-box;
 }
+
+
+
 .container {
     display: flex;
     align-items: center;
-    
     text-align: center;
-    justify-content: space-between;
 
     .left {
-        font-size: 25px;
+        font-size: 20px;
         height: 100%;
         background-color: #f2f0e0;
         display: flex;
@@ -20,21 +21,22 @@
     }
     
     .right {
-        height: 102px;
-        width: 100%;
+        justify-content: center;
+        flex: 1;
+        height: 100px;
         background-color: #c7b299;
         align-items: center;
         display: flex;
-        justify-content: end;
+       
         .col1 {
-            font-size: 25px;
+            font-size: 20px;
             padding: 5px;
         }
         .name {
             font-weight: bold;
         }
         .col2 img{
-            width: 50px;
+            width: 40px;
             padding: 5px;
         }
         img:hover {

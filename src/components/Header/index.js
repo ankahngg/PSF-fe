@@ -21,7 +21,7 @@ function Header() {
     }
 
     return (
-        <React.Fragment>
+        <div>
             <div className={styles.left}>LOGO ..</div>
             <div className={styles.right}>
                 <div className={styles.date}>{state.Dateth} |</div>
@@ -29,7 +29,7 @@ function Header() {
                 <img src={account_img}/>
                 <img src={logout_img} onClick={() => handleLogout()}/>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 
