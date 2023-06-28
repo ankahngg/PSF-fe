@@ -7,14 +7,14 @@ import {useSelector,useDispatch} from 'react-redux';
 import {stateSlice} from '../../redux/state/stateSlice';
 import axios from 'axios';
 import { useGoogleLogin } from '@react-oauth/google';
+import BicyleLoader from '../../components/BicyleLoader'
 
 
 function Login() {
     const dispatch = useDispatch();
-    const state = useSelector((state) => state.state);
     const navigate = useNavigate();
-    const [Email,SetEmail] = useState();
-    const [Password,SetPassword] = useState();
+    const Loader = useSelector((state) => state.state.Loader);
+   
     const [ErrorLog,SetErrorLog] = useState('');
 
     
@@ -55,7 +55,7 @@ function Login() {
     })
 
     const handleSuccess = async (response) => {
-        
+        dispatch(stateSlice.actions.setLoader(true));
         const token = response.access_token;
         const data = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${token}`)
         const dt = data.data;
@@ -65,12 +65,16 @@ function Login() {
         localStorage.setItem("name",dt.name);
         localStorage.setItem("id",dt.id);
         dispatch(stateSlice.actions.setUserId(dt.id));
+        dispatch(stateSlice.actions.setLoader(false));
         navigate('/HOME');
     };
 
     return (
         
         <div className={styles.container}>
+           
+            {(Loader ? <BicyleLoader />:<></>)}
+            
             <div className={styles.left}>
                 <img src={picture_login}/>
                 <div className={styles.picture_title}>

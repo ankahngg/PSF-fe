@@ -188,7 +188,7 @@ function BicycleLoader() {
                 </g>
             </svg>
             <div className={styles.mess}>VUI LÒNG CHỜ  </div>
-            <div className={styles.mess}> ĐANG LẤY DỮ LIỆU </div>
+            <div className={styles.mess}>ĐANG LẤY DỮ LIỆU </div>
         </div>
     );
 }
