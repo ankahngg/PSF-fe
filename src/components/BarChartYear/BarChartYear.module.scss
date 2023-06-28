@@ -1,0 +1,25 @@
+// .container {
+//     margin-top: 20px;
+//     padding-right: 50px;
+//     display: grid;
+//     grid-template-columns: 1fr ;
+//     justify-content: space-between;
+//     // .chart1 {
+//     //     display: flex;
+//     //     justify-content: center;
+//     // }
+//     // .chart2 {
+//     //     display: flex;
+//     //     justify-content: center;
+//     // }
+// }
+
+.container {
+    height: 800px;
+}
+
+@media (max-width:900px) {
+    .container {
+        grid-template-columns: 1fr ;
+    }
+}

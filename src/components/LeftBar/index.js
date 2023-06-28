@@ -11,7 +11,6 @@ import Thu from './Thu.png'
 function LeftBar() {
     const dispatch = useDispatch();
     const state = useSelector((state) => state.state);
-    const data = useSelector((state) => state.data);
    
     const MoneyOut = useSelector(moneyOutSelector);
     const MoneyIn = useSelector(moneyInSelector);
@@ -44,7 +43,7 @@ function LeftBar() {
     }
 
     return (
-        <div>
+        <div className={styles.container}>
             <div className={get("day_left") + " " + styles.dayLeft}>
                 <div>
                     Còn

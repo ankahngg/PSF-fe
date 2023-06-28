@@ -57,3 +57,13 @@
     position: relative;
     width: fit-content;
 }
+
+@media only screen and (max-width:800px)
+{
+    .grid_container {
+        border: none;
+        padding:10px;
+        width: 100%;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}

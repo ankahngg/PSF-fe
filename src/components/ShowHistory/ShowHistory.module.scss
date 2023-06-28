@@ -1,5 +1,4 @@
 .container {
-    width: 530px;
     padding: 10px;
 }
 
@@ -24,31 +23,36 @@
     }
 }
 
-.historyDisplay {
-    font-size: 20px;
-    margin-top: 20px;
-    overflow: scroll;
+.fwb {
+    font-weight: bold;
+}
+
+.gridContainer {
+    padding-right: 10px;
     height: 360px;
+    overflow: scroll;
+    overflow-x: hidden;
+    margin-top: 20px;
+    font-size: 20px;
+    display: grid;
+    grid-template-columns: 100px 100px auto 20px;
+    align-content: start;
 
-    table {
-        width: 100%;
+
+    .gridItems {
         text-align: center;
-    }
-
-    td,tr,th,table {
-        border: none;
-    }
-
-    .note {
-        width: 50%;
     }
 
     button {
         color: red;
-        font-weight: bold;
+    }
+
+    button:hover {
+        cursor: pointer;
     }
 
 }
+
 
 .moneyIn {
     color: lightgreen;
@@ -59,15 +63,12 @@
 }
 
 @media only screen and (max-width:800px){
-    .container {
-        width: 100%;
-        padding: 10px;
-    }
+   
     .header {
         font-size: 15px;
     }
-    .historyDisplay {
-        font-size: 15px;
+    .gridContainer {
+        font-size: 18px;
     }
     .sortButton {
         button {
@@ -76,3 +77,4 @@
         }
     }
 }
+

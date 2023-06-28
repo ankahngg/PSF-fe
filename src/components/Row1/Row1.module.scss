@@ -2,15 +2,22 @@
     display: block;
 }
 
-tr,td {
-    border: none;
+.container {
+    display: flex;
+    justify-content: center;
 }
 
 .week {
+    flex:1;
+    display: flex;
+    flex-flow: column;
     position: relative;
     font-size: 20px;
     text-align: center;
-    padding: 10px ;
+    justify-content: center;
+    width: 100px;
+    height: 70px;
+    border: 1px solid #000;
 
     &:hover{
         background-color: #e6e4c0;
@@ -50,9 +57,27 @@ tr,td {
 }
 
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 800px)  {
     .week {
+        flex: 1;
         font-size: 15px;
-        width: 70px;
+        width: 80px;
+        height: 60px;
     }
+   
 }
+
+@media only screen and (max-width: 700px)  {
+    .week {
+        flex: 1;
+        font-size: 15px;
+        width: 75px;
+    }
+
+    .container{
+        margin-top: 10px;
+    }
+    
+}
+
+

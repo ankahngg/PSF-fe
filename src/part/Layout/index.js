@@ -43,24 +43,24 @@ function Layout() {
                     }
                 }
             }  
-        dispatch(stateSlice.actions.setLoader(false));
+            dispatch(stateSlice.actions.setLoader(false));
     }
 
+    function handleWindowResize() {
+        dispatch(stateSlice.actions.setWindowSize(window.innerWidth))
+    }
+    
     useEffect(() => {
-        
-        function handleWindowResize() {
-            dispatch(stateSlice.actions.setWindowSize(window.innerWidth))
-        }
         window.addEventListener('resize', handleWindowResize);
 
         fetchData();
+        
         return () => {
             window.removeEventListener('resize', handleWindowResize);
-           
         };
     }, []);  
 
-    if(state.WindowSize <= 800)
+    if(state.WindowSize <= 1200)
     return (
         <>
             <div className={styles.layout}>

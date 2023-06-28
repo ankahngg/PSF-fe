@@ -27,7 +27,6 @@ function ShowHistory() {
         } else {
           tmp = [...list].sort((a, b) => a.id - b.id);
         }
-        console.log(tmp);
         setList(tmp);
     }
    
@@ -60,9 +59,7 @@ function ShowHistory() {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.date}>
-                    {state.CrDateth}
-                </div>
+                
                 <div className={styles.sortButton}>
                     <span>SẮP XẾP</span>
                     <button onClick={() => handleClick('giam')}>GIẢM</button>
@@ -70,37 +67,36 @@ function ShowHistory() {
                     <button onClick={() => handleClick('tg')}>TG</button>
                 </div>
             </div>
-            <div className={styles.historyDisplay}>
-                <table>
-                    <tr>
-                        <th>Ngày</th>
-                        <th>Tiền</th>
-                        <th className={styles.note}>Ghi chú</th>
-                        <th></th>
-                    </tr>
+            <div className={styles.history}></div>
+                <div className={styles.gridContainer}>
+                   
+                    <div className={styles.fwb+" "+styles.gridItems}>Ngày</div>
+                    <div className={styles.fwb+" "+styles.gridItems}>Tiền</div>
+                    <div className={styles.fwb+" "+styles.gridItems}>Ghi chú</div>
+                    <div></div>
+                
                     {
                         list &&
                         list.map(function(value,index) {
                             return (
-                                <tr key={index}>
-                                    <td>{value.date}</td>
-                                    <td className={(value.kind == 'out')?styles.moneyOut:styles.moneyIn}>
-                                    {value.money}k</td>
-                                    <td className={styles.note}>{value.note}</td>
-                                    <td>
+                                <>
+                                    <div className={styles.gridItems}>{value.date}</div>
+                                    <div className={styles.gridItems+" "+(value.kind == 'out'?styles.moneyOut:styles.moneyIn)}>
+                                    {value.money}k</div>
+                                    <div className={styles.gridItems}>{value.note}</div>
+                                    <div>
                                         <button 
                                         onClick={() => handleRemove(value)}>
                                         X
                                         </button>
-                                    </td>
-
-                                </tr>
+                                    </div>
+                                </>
                             )
                         })
                     }
-                </table>
+                </div>
             </div>
-        </div>
+       
 
     )
 }

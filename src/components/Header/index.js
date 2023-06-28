@@ -27,7 +27,7 @@ function Header() {
                 <div className={styles.date}>{state.Dateth} |</div>
                 XIN CHÀO {localStorage.getItem('name')} !
                 <img src={account_img}/>
-                <img src={logout_img} onClick={() => handleLogout()}/>
+                <img className={styles.logout} src={logout_img} onClick={() => handleLogout()}/>
             </div>
         </div>
     );

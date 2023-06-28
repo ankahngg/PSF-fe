@@ -6,7 +6,6 @@ import React from 'react';
 import styles from './Table.module.scss'
 import {stateSlice} from '../../redux/state/stateSlice';
 import {useSelector,useDispatch} from 'react-redux';
-import Loader from '../../components/Loader';
 
 function Table() {
     const dispatch = useDispatch();
@@ -35,15 +34,14 @@ function Table() {
                   <div></div>
                 )}
         </div>
-        <table className={styles.tableContainer}>
-          {state.Loader && <Loader />}
-          <tr><Row1 /></tr>
-          <tr>
-            <td><LeftBar /></td>
-            <td colSpan={5} className={styles.TopAlign}><ShowHistory /></td>
-            <td className={styles.TopAlign}><RightBar /></td>
-          </tr> 
-        </table>
+        <div className={styles.gridContainer}>
+          <div className={styles.Month+" "+styles.gridItems}>THÁNG {state.CrMonth}</div>
+          <div className={styles.Nhap+" "+styles.gridItems}>NHẬP LIỆU</div>
+          <div className={styles.Row1+" "+styles.gridItems}><Row1 /></div>
+          <div className={styles.LeftBar+" "+styles.gridItemsz}><LeftBar /></div>
+          <div className={styles.ShowHistory+" "+styles.gridItems}><ShowHistory /></div>
+          <div className={styles.RightBar+" "+styles.gridItems}><RightBar /></div>
+        </div>
       </div>
     )
     

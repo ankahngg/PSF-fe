@@ -1,9 +1,7 @@
 import styles from './Login.module.scss';
 import React, { useState, useEffect } from 'react';
 import picture_login from '../../file/Picture_login.png';
-import password_login from '../../file/password_login.png';
 import gg_logo from '../../file/gg_logo.png';
-import user_login from '../../file/user_login.png';
 import {useNavigate}  from 'react-router-dom';
 import {useSelector,useDispatch} from 'react-redux';
 import {stateSlice} from '../../redux/state/stateSlice';

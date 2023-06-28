@@ -1,11 +1,8 @@
-.bdbottom {
-    border-bottom: 1px solid #000;
-}
+
 
 .focus {
     background-color: #e6e4c0;
 }
-
 
 
 .in:hover {
@@ -20,16 +17,17 @@
 
 
 
-
 .tem {
-    flex: 100%;
+    min-width: 150px;
+    flex:1;
+    border: 1px solid #000;
     position: relative;
-    padding: 20px;
+    display: flex;
+    flex-flow: column;
+    padding: 20px 10px ;
     text-align: center;
     align-items: center;
     
-
-
     div:first-child {
         font-size: 26px;
     }
@@ -47,7 +45,6 @@
         position: absolute;
         top: 0px;
         right: 0px;
-        
     }
 
     .chi {
@@ -67,24 +64,17 @@
 }
 
 
-@media only screen and (max-width:800px){
-    .tem {
-       padding:15px 10px;
-    }
-    .dayLeft {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-}
-
-table, th, td, tr {
-    border: 1px solid;
-    border-collapse: collapse;
-    
-}
 
 @media only screen and (max-width: 800px) {
+    .tem {
+        padding:15px 10px;
+     }
+     .dayLeft {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+     }
+
     .tem {
       
         div:first-child {
@@ -105,5 +95,11 @@ table, th, td, tr {
         .thu {
             width: 35px;
         }
+    }
+}
+
+@media (max-width:950px) and (min-width:700px) {
+    .container {
+        display: flex;
     }
 }

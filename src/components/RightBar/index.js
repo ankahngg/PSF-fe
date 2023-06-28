@@ -98,6 +98,9 @@ function RightBar() {
     return (
         (state.CrYear == state.Year ?
         <div className={styles.container}>
+            <div className={styles.date}>
+                {state.CrDateth}
+            </div>
             <div className={styles.instruction}>
                 <div>- : TIÊU</div>
                 <div>+ : KIẾM</div>

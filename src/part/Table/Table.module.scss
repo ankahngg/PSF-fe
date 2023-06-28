@@ -1,20 +1,3 @@
-
-table, th, td, tr {
-    border: 1px solid;
-    border-collapse: collapse;
-    
-}
-
-
-.TopAlign {
-    vertical-align: top;
-  }
-
-  .yearDisplay {
-    font-size: 30px;
-    font-weight: bold;
-}
-
 .row0 {
   display: flex;
   align-items: center;
@@ -29,11 +12,14 @@ table, th, td, tr {
       background-color: #f2e57e;
     }
   }
+  .yearDisplay {
+    font-size: 30px;
+    font-weight: bold;
+  }
 }
 
-.tableContainer {
-  position: relative;
-}
+
+
 .loader {
   position: absolute;
   background-color: rgba(250, 235, 215, 0.662);
@@ -42,3 +28,100 @@ table, th, td, tr {
   z-index: 10;
   border: 1px solid #000;;
 }
+
+.gridItems {
+  border: 1px solid #000;
+}
+
+.Month {
+  font-size: 28px;
+  font-weight: bold;
+  grid-area: Month;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Nhap {
+  grid-area: Nhap;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Row1 {
+  grid-area: Row1;
+}
+
+.LeftBar {
+  grid-area: LeftBar;
+}
+
+.ShowHistory {
+  grid-area: ShowHistory;
+}
+
+.RightBar {
+  grid-area: RightBar;
+}
+
+
+
+.gridContainer {
+  width: 1000px;
+  display: grid;
+  grid-template-columns: 200px auto auto;
+  grid-template-areas: 
+  'Month Row1 Nhap'
+  'LeftBar ShowHistory RightBar'
+  ;
+}
+
+@media (max-width:1200px) and (min-width:950px) {
+   .gridContainer {
+    width: 100%;
+   }
+}
+
+@media (max-width:950px) and (min-width:800px) {
+  .gridContainer{
+    width: 100%;
+    grid-template-columns: auto auto;
+    grid-template-areas: 
+    'LeftBar Month'
+    'Row1 Nhap'
+    'ShowHistory RightBar'
+  ;
+  }
+}
+
+@media (max-width:800px){
+  .gridContainer{
+    width: 100%;
+    grid-template-columns: auto auto;
+    grid-template-areas: 
+    'LeftBar Month'
+    'Row1 Nhap'
+    'ShowHistory RightBar'
+  ;
+  }
+}
+
+@media (max-width:700px){
+  .gridContainer{
+    width: 100%;
+    grid-template-columns: auto auto;
+    grid-template-areas: 
+    'LeftBar Month'
+    'Row1 Nhap'
+    'ShowHistory RightBar'
+  ;
+  }
+}
+
+
+
+
+
+

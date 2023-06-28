@@ -45,7 +45,6 @@ function YearChoosen() {
 
     return (
         <div className={styles.container}>
-            {state.Loader && <Loader />}
             <div className={styles.row1}>
                 <label>NĂM</label>
                 <select name="year" className={styles.yearOption}

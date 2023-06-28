@@ -9,7 +9,6 @@ import online from './online.png';
 function Row1() {
     const dispatch = useDispatch();
     const state = useSelector((state) => state.state);
-    const data = useSelector((state) => state.data);
 
     function daysInMonth (month, year) {
         return new Date(year, month, 0).getDate();
@@ -65,7 +64,7 @@ function Row1() {
         )
         else 
         return (
-            <td className={get(range,kind)} 
+            <div className={get(range,kind)} 
             onClick={() => handleClick(range,kind,sum,number)}>
                 <div>TUẦN {number}</div>
                 {
@@ -74,22 +73,18 @@ function Row1() {
                 {  
                     (number == state.Week && state.Month == state.CrMonth && state.Year == state.CrYear)  && <img src={online} />
                 }
-            </td>
+            </div>
         )
     }
     
     return (
-        <React.Fragment>
-            {(state.WindowSize > 800?<td className={styles.month}>THÁNG {state.CrMonth}</td>:<></>)}
-
+        <div className={styles.container}>
             <Week number={1}  />
             <Week number={2}  />
             <Week number={3}  />
             <Week number={4}  />
             <Week number={5}  />
-
-            {(state.WindowSize > 800?<td className={styles.month}>NHẬP LIỆU</td>:<></>)}
-        </React.Fragment>
+        </div>
     )
 }
 

@@ -36,7 +36,9 @@ export const stateSlice = createSlice({
         CrDateth : Dateth,
 
         Loader: 0,
+        InitLoader:0,
         Render: 0,
+
 
         UserId: (localStorage.getItem('id') ? localStorage.getItem('id') : ''),
 
@@ -44,6 +46,9 @@ export const stateSlice = createSlice({
         
     },
     reducers: {
+        setInitLoader : (state,action) => {
+            state.InitLoader = action.payload;
+        },
         setCrKind : (state,action) => {
             state.CrKind = action.payload;
         },

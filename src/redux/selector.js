@@ -59,3 +59,79 @@ export function weekSelectorOut(state,id) {
 
     return sum;
 }
+
+export function chartDataSelector(state) {
+        
+    if(state.chart.CrMonth != 13) {
+        const year = `year${state.chart.CrYear}`;
+        const month = `month${state.chart.CrMonth}`;
+        const data = state.data[year][month];
+        const week_in = [0,0,0,0,0,0];
+        const week_out = [0,0,0,0,0,0];
+        const month_in = data.in;
+        const month_out = data.out;
+
+        
+        for(var val of data.list) {
+            const arr = val.date.split('-');
+            const day = arr[0];
+            const k = Math.ceil(1.0*day/7);
+            
+            if(val.kind == 'out') week_out[k] += val.money;
+            else week_in[k] += val.money;
+        } 
+
+        const week = [
+            {
+                in : 0,
+                out : 0
+            },
+            {
+                in : week_in[1],
+                out : week_out[1]
+            },
+            {
+                in : week_in[2],
+                out : week_out[2]
+            },
+            {
+                in : week_in[3],
+                out : week_out[3]
+            },
+            {
+                in : week_in[4],
+                out : week_out[4]
+            },
+            {
+                in : week_in[5],
+                out : week_out[5]
+            },
+        ]
+       
+
+        return {
+            week,
+            month_in,
+            month_out
+        }
+    }
+    else {
+
+    }
+ }
+
+export function chartDataYearSelector(state) {
+    const data = state.data;
+    const year = `year${state.chart.CrYear}`;
+    const months_data = [];
+    for(let i=1;i<=12;i++) {
+        let month = `month${i}`;
+        months_data.push({
+            in : data[year][month].in,
+            out : data[year][month].out,
+        })
+    }
+
+    return months_data;
+
+}

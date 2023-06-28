@@ -74,7 +74,7 @@ function MobileHeader() {
                 </div>
                 <div className={styles.col2}>
                     <img src={account_img}/>
-                    <img src={logout_img} onClick={() => handleLogout()}/>
+                    <img className={styles.logout} src={logout_img} onClick={() => handleLogout()}/>
                 </div>
             </div>
         </div>

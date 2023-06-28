@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const date = new Date();
 const Year = date.getFullYear();
-const len = 5;
+const len = 1;
 const YearData = {};
 
 for(let i=Year; i >= Year-len+1; i--) {
@@ -53,7 +53,6 @@ export const dataSlice = createSlice({
             else state[CrYear][CrMonth].out -= +payload.money;
         },
         clearNote : (state,action) => {
-            console.log('wtf');
             const date = new Date();
             const year = date.getFullYear();
             for(let i=1;i<=12;i++) state[`year${year}`][`month${i}`] = {

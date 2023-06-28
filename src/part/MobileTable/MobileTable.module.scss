@@ -31,9 +31,6 @@ table, th, td, tr {
   }
 }
 
-.tableContainer {
-  position: relative;
-}
 .loader {
   position: absolute;
   background-color: rgba(250, 235, 215, 0.662);
@@ -41,4 +38,9 @@ table, th, td, tr {
   height: 100%;
   z-index: 10;
   border: 1px solid #000;;
+}
+
+.row1 {
+  display: flex;
+  border: 1px solid #000;
 }
