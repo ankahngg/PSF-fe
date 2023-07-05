@@ -1,13 +1,14 @@
 import Header from '../../components/Header'
 import Navigate from '../../components/Navigate';
 import styles from './Layout.module.scss';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import MobileHeader from '../../components/MobileHeader';
 import { useState,useEffect } from 'react';
 import {useSelector,useDispatch} from 'react-redux';
 import {stateSlice} from '../../redux/state/stateSlice';
 import {dataSlice} from '../../redux/data/dataSlice';
 import axios from 'axios';
+
 
 function sleep(ms) {
     return new Promise((resolve,reject) => {
@@ -17,6 +18,7 @@ function sleep(ms) {
 
 
 function Layout() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const state = useSelector((state) => state.state);
     const year = useSelector((state) => state.state.Year);
@@ -28,6 +30,7 @@ function Layout() {
         for(let i=year; i >= year-len+1;i--) 
             for(let j=1;j<=12;j++) {
                 const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/?year=${i}&month=${j}&id=${id}`);
+                if(res.data == 'hack cc') {localStorage.clear();return}
                 if(res.data != 'khong co du lieu') {
                     
                     for(let val of res.data) {
