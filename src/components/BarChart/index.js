@@ -27,6 +27,7 @@ function BarChart() {
     }
 
     const option = {
+       
         scales : {
             y : {
                 title : {

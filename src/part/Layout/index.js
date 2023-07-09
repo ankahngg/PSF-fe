@@ -47,6 +47,7 @@ function Layout() {
                 }
             }  
             dispatch(stateSlice.actions.setLoader(false));
+        navigate('/HOME')
     }
 
     function handleWindowResize() {
@@ -57,6 +58,7 @@ function Layout() {
         window.addEventListener('resize', handleWindowResize);
 
         fetchData();
+
         
         return () => {
             window.removeEventListener('resize', handleWindowResize);

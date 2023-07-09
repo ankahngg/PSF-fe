@@ -10,7 +10,7 @@ import styles from './Home.module.scss'
 function Home() {
     const dispatch = useDispatch();
     const state = useSelector((state) => state.state);
-
+    dispatch(stateSlice.actions.setCrTab('#/HOME'))
     return (
         <>
 

@@ -34,6 +34,7 @@ export const stateSlice = createSlice({
         CrMonth: Month,
         CrState : 'month',
         CrDateth : Dateth,
+        CrTab : window.location.hash,
 
         Loader: 0,
         InitLoader:0,
@@ -46,6 +47,9 @@ export const stateSlice = createSlice({
         
     },
     reducers: {
+        setCrTab : (state,action) => {
+            state.CrTab = action.payload;
+        },
         setInitLoader : (state,action) => {
             state.InitLoader = action.payload;
         },

@@ -12,13 +12,9 @@ import { dataSlice } from '../../redux/data/dataSlice';
 
 import React, { useState } from 'react';
 
-function getPage() {
-    if(window.location.pathname == "/STATISTIC") return 2;
-    else return 1;
-}
 
 function MobileHeader() {
-    const [State,SetState] = useState(getPage());
+    const Tab = useSelector((state) => state.state.CrTab);
     const [Hover,SetHover] = useState(0);
     const dispatch = useDispatch();
     const state = useSelector((state) => state.state);
@@ -31,9 +27,7 @@ function MobileHeader() {
         navigate('/LOGIN');
     }
 
-    function handleClick(i) {
-        SetState(i);
-    }
+    
 
     return (
         <div className={styles.wrapper}>
@@ -42,11 +36,10 @@ function MobileHeader() {
             <div className={styles.left}>
                 <Link to="/HOME" className={styles.HOME}>
                     <div className={styles.home} 
-                        onClick={() => handleClick(1)}
                         onMouseEnter={() => SetHover(1)}
                         onMouseLeave={() => SetHover(0)}
                     >
-                        <div className={styles.logo + " " + (State==1 || Hover==1 ? styles.onFocus : styles.lol)}>
+                        <div className={styles.logo + " " + (Tab=="#/HOME" || Hover==1 ? styles.onFocus : styles.lol)}>
                             <img src={home_logo} />
                         </div>
                         <div>HOME</div>
@@ -55,11 +48,10 @@ function MobileHeader() {
                 <Link to="/STATISTIC" className={styles.STATISTIC}>
 
                     <div className={styles.statistic} 
-                        onClick={() => handleClick(2)}
                         onMouseEnter={() => SetHover(2)}
                         onMouseLeave={() => SetHover(0)}
                     >
-                        <div className={styles.logo + " "+ (State==2 || Hover==2 ? styles.onFocus : styles.lol)}>
+                        <div className={styles.logo + " "+ (Tab=='#/STATISTIC' || Hover==2 ? styles.onFocus : styles.lol)}>
                             <img src={statistic_logo} />
                         </div>
                         <div>STATISTIC</div>
