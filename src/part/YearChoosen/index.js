@@ -3,7 +3,10 @@ import styles from './YearChoosen.module.scss';
 import online_png from '../../file/online.png';
 import {useSelector,useDispatch} from 'react-redux';
 import {stateSlice} from '../../redux/state/stateSlice';
-import Loader from '../../components/Loader'
+import green_arrow from '../../file/green_arrow.png';
+import red_arrow from '../../file/red_arrow.png';
+import black_arrow from '../../file/black_arrow.png';
+
 
 const date = new Date();
 const year = date.getFullYear();
@@ -43,6 +46,12 @@ function YearChoosen() {
         dispatch(stateSlice.actions.setCrState('month'));
     }
 
+    function GetArrow(moneyIn,moneyOut){
+        if(moneyIn == '...') return <img src={black_arrow} />
+        if( moneyIn-moneyOut >= 0) return <img src={green_arrow} /> 
+        else return <img src={red_arrow} />
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.row1}>
@@ -74,22 +83,32 @@ function YearChoosen() {
 
                             return (
                                 <div key={index}
-                                    className={styles.grid_items + (state.CrYear == YearState && state.CrMonth == value ? " " + styles.onFocus : "")}
-                                    onClick={() => handleClick(value,moneyIn)}>
-                                    {(state.Year == YearState && state.Month == value ? <img src={online_png} /> : <div></div>)}
+                                className={styles.grid_items + (state.CrYear == YearState && state.CrMonth == value ? " " + styles.onFocus : "")}
+                                onClick={() => handleClick(value,moneyIn)}>
                                     <div className={styles.thang}>
                                         THÁNG {value}
+                                        {(state.Year == YearState && state.Month == value ? <img className={styles.online} src={online_png} /> : <div></div>)}
                                     </div>
-                                    <div>
-                                        <span>CHI :</span>
-                                        <span className={styles.moneyOut}> {moneyOut}k</span>
-                                    </div>
-                                    <div>
-                                        <span>THU :</span>
-                                        <span className={styles.moneyIn}> {moneyIn}k</span>
-                                    </div>
-                                </div>
 
+                                    <div className={styles.main}>
+                                        <div className={styles.left_part}>
+                                            <div>   
+                                                <span className={styles.moneyOut}> {moneyOut}k</span>
+                                            </div>
+                                            <div>
+                                                <span className={styles.moneyIn}> {moneyIn}k</span>
+                                            </div>
+                                        </div>
+
+                                        <div className={styles.right_part}>
+                                            {GetArrow(moneyIn,moneyOut)}
+                                            <div>
+                                                {(moneyIn != '...' ? `${Math.abs(moneyIn-moneyOut)}k` : '...')}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             )
                         })
                     }

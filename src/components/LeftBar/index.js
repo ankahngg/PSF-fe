@@ -3,6 +3,9 @@ import styles from './LeftBar.module.scss';
 import {useSelector,useDispatch} from 'react-redux';
 import {stateSlice} from '../../redux/state/stateSlice';
 import { moneyOutSelector, moneyInSelector } from '../../redux/selector';
+import green_arrow from '../../file/green_arrow.png';
+import red_arrow from '../../file/red_arrow.png';
+
 
 import Chi from './Chi.png';
 import Thu from './Thu.png'
@@ -44,20 +47,27 @@ function LeftBar() {
 
     return (
         <div className={styles.container}>
-            <div className={get("day_left") + " " + styles.dayLeft}>
-                <div>
-                    Còn
+            <div className={styles.grid_items + " " + styles.row1}>
+                <div className={styles.tem2}>
+                    <div>
+                        Còn
+                    </div>
+                    <div>
+                        {
+                            (state.CrMonth == state.Month && state.CrYear == state.Year ? state.Leftth : 0)
+                        }
+                    </div>
+                    <div>
+                        Ngày
+                    </div>
                 </div>
-                <div>
-                    {
-                        (state.CrMonth == state.Month && state.CrYear == state.Year ? state.Leftth : 0)
-                    }
-                </div>
-                <div>
-                    Ngày
+                <div className={styles.tem3}>
+                    {(MoneyIn-MoneyOut >= 0 ? <img src={green_arrow} /> : <img src={red_arrow} />)}
+                    <div>{Math.abs(MoneyIn-MoneyOut)}k</div>
+                    
                 </div>
             </div>
-            <div className={get('month','out')} onClick={()=>handleClick(1)}>
+            <div className={styles.grid_items + " " +get('month','out')} onClick={()=>handleClick(1)}>
                 <div>
                     Đã
                 </div>
@@ -69,7 +79,7 @@ function LeftBar() {
                     Tiêu
                 </div>
             </div>
-            <div className={get('month','in')} onClick={()=>handleClick(2)}>
+            <div className={styles.grid_items + " " +get('month','in')} onClick={()=>handleClick(2)}>
                 <div>
                     Đã
                 </div>

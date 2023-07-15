@@ -9,9 +9,9 @@
 .grid_container {
     
     border: 1px solid #000;
-    width: 600px;
+    
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 180px 180px 180px 180px;
     
     .grid_items {
         position: relative;
@@ -20,7 +20,7 @@
         border: 1px solid #000;
         padding: 10px;
 
-        img {
+        .online {
             position: absolute;
             width: 20px;
             right: 2px;
@@ -58,12 +58,61 @@
     width: fit-content;
 }
 
+.main {
+    font-size: 25px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    img {
+        width: 20px;
+    }
+    .left_part {
+        text-align: center;
+    }
+    
+    .right_part {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       flex-direction: column;
+
+       div {
+        font-weight: bold;
+       }
+    }
+}
+
+
 @media only screen and (max-width:800px)
 {
     .grid_container {
         border: none;
         padding:10px;
         width: 100%;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 180px 180px 180px;
+    }
+}
+@media only screen and (max-width:600px)
+{
+    .grid_container {
+        grid-template-columns: 160px 160px 160px;
+        .grid_items {
+            font-size: 18px;
+        }
+    }
+    .main {
+        font-size:  20px
+    }
+}
+
+@media only screen and (max-width:430px)
+{
+    .grid_container {
+        grid-template-columns: 160px 160px ;
+        .grid_items {
+            font-size: 18px;
+        }
+    }
+    .main {
+        font-size:  20px
     }
 }
